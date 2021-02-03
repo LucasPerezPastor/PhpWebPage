@@ -27,5 +27,19 @@ define('DEFAULT_IMAGE_LIBROS','imagenes/libros');
 //TEMPLATE A USAR EN LAS VISTAS
 define('TEMPLATE','Basic');
 
+//TITULO DE LA PAGINA
+define('TITLE','Titulo de la página');
+
+//DESCRIPCION DE LA PAGINA
+define('DESCRIPTION','Descripcion de la página');
+
+//AUTOR DE LA PÁGINA 
+define('AUTHOR','Autor de la página');
+
 //CSS A USAR PARA LAS VISTAS
-define('CSS_FILE','css/style.css');
+define('CSS_BASIC_FILE','css/starter-template.css'); // Custom styles for this template -->
+define ('CSS_BOOTSTRAP','css/bootstrap.min.css'); // Bootstrap core CSS -->
+
+
+//Charset por defecto
+define('CHARSET','utf-8');

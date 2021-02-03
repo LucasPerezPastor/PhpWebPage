@@ -2,11 +2,16 @@
 //  CONTROLADOR FRONTAL
 
 class Frontcontroller {
+
+    
+
     // método principal del controlador frontal
     public static function main(){
+        
+           
+
         try{
-            //GESTIÓN DE PETICIONES
-            
+            //GESTIÓN DE PETICIONES  
             //recuperar el controlador de la petición
             //si no llega el parámetro c , el conrtrolador es Welcome (config.php)
             //si llega c=libro, el controlador es LibroController
