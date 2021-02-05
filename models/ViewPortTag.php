@@ -27,7 +27,7 @@ class ViewPortTag{
         $out.=($this->minimunScale!=0)?"minimum-scale={$this->minimumScale}":'';
         $out=rtrim($out,', ');
 
-        return HtmlTags::meta('viewport',$out,'name');
+        return HtmlTags::meta('viewport',$out,'name').PHP_EOL;
     }
 }
 

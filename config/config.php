@@ -41,5 +41,4 @@ define('CSS_BASIC_FILE','css/starter-template.css'); // Custom styles for this t
 define ('CSS_BOOTSTRAP','css/bootstrap.min.css'); // Bootstrap core CSS -->
 
 
-//Charset por defecto
-define('CHARSET','utf-8');
+

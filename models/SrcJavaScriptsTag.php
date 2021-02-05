@@ -26,7 +26,7 @@ class SrcJavaScriptsTag{
     {
         $out='';
         foreach ($this->list as $value) {
-           $out.=HtmlTags::srcJavaScript($value);
+           $out.=HtmlTags::srcJavaScript($value).PHP_EOL;
         }
         return $out;
     }

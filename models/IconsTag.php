@@ -16,7 +16,7 @@ class IconsTag{
    {
        $out='';
        foreach ($this->list as $value) {
-           $out.=HtmlTags::icon($value->rel,$value->src,$value->width,$value->heigth);
+           $out.=HtmlTags::icon($value->rel,$value->src,$value->width,$value->heigth).PHP_EOL;
        }
        return $out;
    }

@@ -1,23 +1,27 @@
 <?php
 
-class Lista extends Article{
+class Lista extends Tag{
     
     const ORDERED="ol";
     const UNORDERED="ul";
+    const ARTICLE="li";
 
     //Constantes con los valores del tipo de lista 
     //pueden ser ordenadas "ol" o desordenadas "ul"
 
-    public $type=SELF::UNORDERED;
+    //public $type=SELF::UNORDERED;
     private $articles=[];
-
-    public function __construct(string $type=SELF::UNORDERED,string $id,string $title='',string $src='',$tags=NULL)
+    
+    public function __construct(string $type=SELF::UNORDERED,string $id,string $title='',string $src='',$attribute=NULL)
     {
-        parent::__construct($id,$title,$src,$tags);
-        if ($type<>SELF::ORDERED && $type<>SELF::UNORDERED){$type=SELF::UNORDERED;};
+        parent::__construct($id,$title,$src,$attribute);
+        if ($type<>SELF::ORDERED && $type<>SELF::UNORDERED && $type<>SELF::ARTICLE){
+            $this->setTypeOfAttribute(SELF::UNORDERED);
         // Si $type no coincide con las constantes de tipo de lista se asume que la lista
         //es desordenada
-        $this->type=$type;
+        }else{
+            $this->setTypeOfAttribute($type);
+        };
     }
 
     /**
@@ -29,7 +33,7 @@ class Lista extends Article{
      * @return void
      */
     public function addArticle($article){
-        if ($article instanceof Article){
+        if ($article instanceof Tag){
             $this->articles[]=$article;
         }
        
@@ -44,21 +48,20 @@ class Lista extends Article{
      * @param string $id
      * @return boolean
      */
-    public function removeTagsById(string $id):bool{
+    public function removeAttributeById(string $id):bool{
         $ok=false;
         if ($this->getId()==$id){
-            $this->removeTags();
+            $this->removeAttribute();
             $ok=true;
         }
         foreach ($this->articles as $value) {
-            if (is_a($value,SELF::class)){
-                $value->removeTagsById($id);
-            }else{
-                if ($value->getId()==$id){
-                    $value->removeTags();
-                    $ok=true;
-                }
-            }
+            if ($value->removeAttributeById($id)){$ok=true;};
+            //Diferentes maneras de obtener el mismo resultado
+            //El valor $ok debe pasar a true si se ha borrado correctamente
+            //Se sigue buscando dentro del bucle por si hubiera alguan id repetida
+            //Aunque no debería ser así, porque las id deben ser únicas.
+            //if ($ok){$value->removeAttributeById($id);}else{$ok=$value->removeAttributeById($id);};
+            //$ok=($value->removeAttributeById($id))?$ok=true:$ok=$ok;
         }
         return $ok;
     }
@@ -70,134 +73,138 @@ class Lista extends Article{
      *  Devuelve true si ha localizado algúna lista o artículo con esa Id.
      *
      * @param string $id
-     * @param [type] $tags
+     * @param [type] $attribute
      * @return boolean
      */
-    public function updateTagsByID(string $id,$tags):bool{
+    public function updateAttributeByID(string $id,$attribute):bool{
         $ok=false;
         if ($this->getId()==$id){
-            $this->updateTags($tags);
+            $this->updateAttribute($attribute);
             $ok=true;
         }
         foreach ($this->articles as $value) {
-            if (is_a($value,SELF::class)){
-                $value->updateTagsById($id,$tags);
-            }else{
-                if ($value->getId()==$id){
-                    $value->updateTags($tags);
-                    $ok=true;
-                }
-            }
+            if ($value->updateAttributeByID($id,$attribute)){$ok=true;}
+            //El valor $ok debe pasar a true si se ha modificado correctamente
+            //Se sigue buscando dentro del bucle por si hubiera alguan id repetida
+            //Aunque no debería ser así, porque las id deben ser únicas.
         }
         return $ok;
     }
 
     /**
-     * Borra los tags de los articulos dentro de la lista
-     * o el tags de la propiedad de la clase si coincide con la Id.
-     * Añade los tags de los articulos dentro de la lista
-     * o el tags de la propiedad de la clase si coincide con la Id.
+     * Borra los attribute de los articulos dentro de la lista
+     * o el attribute de la propiedad de la clase si coincide con la Id.
+     * Añade los attribute de los articulos dentro de la lista
+     * o el attribute de la propiedad de la clase si coincide con la Id.
      * 
      * Devuelve true si ha localizado algúna lista o artículo con esa Id.
      *
      * @param string $id
-     * @param [type] $tags
+     * @param [type] $attribute
      * @return boolean
      */
-    public function addTagsById(string $id,$tags):bool{
-        if ($this->removeTagsById($id)){return $this->updateTagsByID($id,$tags);}else {return false;}
+    public function addAttributeById(string $id,$attribute):bool{
+        if ($this->removeAttributeById($id)){
+            return $this->updateAttributeByID($id,$attribute);}else{
+            return false;}
+        
     }
 
     /**
-     * Borra todos los tags en función de:
-     * Si $onlySubList es false borra los tags de la propiedad de la clase
+     * Borra todos los attribute en función de:
+     * Si $onlySubList es false borra los attribute de la propiedad de la clase
      * y de las propiedades de la lista.
-     * Si $onlySubList es true solo borra los tags de la propiedad de las
+     * Si $onlySubList es true solo borra los attribute de la propiedad de las
      * lista que puedan estar añadidas dentro de la clase principal
-     * Si $noArticles es false borra los tags de las propiedades de los articulos
+     * Si $noArticles es false borra los attribute de las propiedades de los articulos
      * que haya dentro de la lista o sublistas.
-     * Si $noArticles es true no borrara los tags de las propiedades de los articulos 
+     * Si $noArticles es true no borrara los attribute de las propiedades de los articulos 
      * que haya dentro de la lista o sublistas.
      *
      * @param boolean $onlySubList
      * @param boolean $noArticles
      * @return void
      */
-    public function removeAllTags($onlySubList=false,$noArticles=false){
-        if (!$onlySubList){$this->removeTags();};
-        foreach ($this->articles as $value) {
-            if (is_a($value,SELF::class))
+    public function removeAllAttribute($onlySubList=false,$noArticles=false){
+        if (!$onlySubList)
+        {   
+            if(($noArticles && $this->getTypeOfAttribute()<>SELF::ARTICLE) || !$noArticles)
             {
-                $value->removeAllTags(false,$noArticles);
-            }else{
-                    if (!$onlySubList && !$noArticles){$value->removeTags();};
-                }
-            }
-        }
-    /**
-     * Añade todos los tags en función de:
-     * Si $onlySubList es false añade los tags de la propiedad de la clase
-     * y de las propiedades de la lista.
-     * Si $onlySubList es true solo añade los tags de la propiedad de las
-     * lista que puedan estar añadidas dentro de la clase principal
-     * Si $noArticles es false añade los tags de las propiedades de los articulos
-     * que haya dentro de la lista o sublistas.
-     * Si $noArticles es true no añadirá los tags de las propiedades de los articulos 
-     * que haya dentro de la lista o sublistas.
-     *
-     * @param [type] $tags
-     * @param boolean $onlySubList
-     * @param boolean $noArticles
-     * @return void
-     */
-    public function updateAllTags($tags,$onlySubList=false,$noArticles=false){
-        if (!$onlySubList){$this->updateTags($tags);};
+                $this->RemoveAttribute();       
+            }  
+        };
         foreach ($this->articles as $value) {
-            if (is_a($value,SELF::class)){
-                $value->updateAllTags($tags,false,$noArticles);
-            }else{
-                if (!$onlySubList && !$noArticles){$value->updateTags($tags);};
-            }
+            $value->removeAllAttribute(false,$noArticles);
         }
     }
     /**
-     *  Borra todos los tags en función de:
-     * Si $onlySubList es false borra los tags de la propiedad de la clase
+     * Añade todos los attribute en función de:
+     * Si $onlySubList es false añade los attribute de la propiedad de la clase
      * y de las propiedades de la lista.
-     * Si $onlySubList es true solo borra los tags de la propiedad de las
+     * Si $onlySubList es true solo añade los attribute de la propiedad de las
      * lista que puedan estar añadidas dentro de la clase principal
-     * Si $noArticles es false borra los tags de las propiedades de los articulos
+     * Si $noArticles es false añade los attribute de las propiedades de los articulos
      * que haya dentro de la lista o sublistas.
-     * Si $noArticles es true no borrara los tags de las propiedades de los articulos 
-     * que haya dentro de la lista o sublistas.
-     * Añade todos los tags en función de:
-     * Si $onlySubList es false añade los tags de la propiedad de la clase
-     * y de las propiedades de la lista.
-     * Si $onlySubList es true solo añade los tags de la propiedad de las
-     * lista que puedan estar añadidas dentro de la clase principal
-     * Si $noArticles es false añade los tags de las propiedades de los articulos
-     * que haya dentro de la lista o sublistas.
-     * Si $noArticles es true no añadirá los tags de las propiedades de los articulos 
+     * Si $noArticles es true no añadirá los attribute de las propiedades de los articulos 
      * que haya dentro de la lista o sublistas.
      *
-     * @param [type] $tags
+     * @param [type] $attribute
      * @param boolean $onlySubList
      * @param boolean $noArticles
      * @return void
      */
-    public function addAllTags($tags,$onlySubList=false,$noArticles=false){
-        $this->removeAllTags($onlySubList,$noArticles);
-        $this->updateAllTags($tags,$onlySubList,$noArticles);
+    public function updateAllAttribute($attribute,$onlySubList=false,$noArticles=false){
+
+        if (!$onlySubList)
+        {   
+            if(($noArticles && $this->getTypeOfAttribute()<>SELF::ARTICLE) || !$noArticles)
+            {
+                $this->updateAttribute($attribute);       
+            }  
+        };
+        foreach ($this->articles as $value) {
+                $value->updateAllAttribute($attribute,false,$noArticles);
+        }
+    }
+    /**
+     *  Borra todos los attribute en función de:
+     * Si $onlySubList es false borra los Attributede la propiedad de la clase
+     * y de las propiedades de la lista.
+     * Si $onlySubList es true solo borra los attribute de la propiedad de las
+     * lista que puedan estar añadidas dentro de la clase principal
+     * Si $noArticles es false borra los attribute de las propiedades de los articulos
+     * que haya dentro de la lista o sublistas.
+     * Si $noArticles es true no borrara los attribute de las propiedades de los articulos 
+     * que haya dentro de la lista o sublistas.
+     * Añade todos los attribute en función de:
+     * Si $onlySubList es false añade los attribute de la propiedad de la clase
+     * y de las propiedades de la lista.
+     * Si $onlySubList es true solo añade los attribute de la propiedad de las
+     * lista que puedan estar añadidas dentro de la clase principal
+     * Si $noArticles es false añade los attribute de las propiedades de los articulos
+     * que haya dentro de la lista o sublistas.
+     * Si $noArticles es true no añadirá los attribute de las propiedades de los articulos 
+     * que haya dentro de la lista o sublistas.
+     *
+     * @param [type] $attribute
+     * @param boolean $onlySubList
+     * @param boolean $noArticles
+     * @return void
+     */
+    public function addAllAttribute($attribute,$onlySubList=false,$noArticles=false){
+        $this->removeAllAttribute($onlySubList,$noArticles);
+        $this->updateAllAttribute($attribute,$onlySubList,$noArticles);
     }
 
 
     public function __toString()
     {
-        $out='<'.$this->type.' '.$this->getTags().' href="'.$this->getSrc().'">'.$this->getTitle();
+        
+        $out='<'.$this->getTypeOfAttribute().' '.$this->getId('id="','"').' '.$this->getAttribute().' '.$this->getSrc('href="','"').'>'.$this->getTitle();
         foreach ($this->articles as $value) {
            $out.=$value->__toString();
         }
-        $out.="</{$this->type}>";
+        $out.=$this->getTypeOfAttribute('</','>');
         return $out;
     }
 }

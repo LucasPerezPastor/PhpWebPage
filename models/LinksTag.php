@@ -15,7 +15,7 @@ private $list=[];
    {
        $out='';
        foreach ($this->list as $value) {
-           $out.=HtmlTags::link($value->rel,$value->src,$value->type,$value->title,$value->asTo);
+           $out.=HtmlTags::link($value->rel,$value->src,$value->type,$value->title,$value->asTo).PHP_EOL;
        }
        return $out;
    }
