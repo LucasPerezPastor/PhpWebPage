@@ -6,39 +6,105 @@
 
 // global $language;
 
-//definimos el charset
-define ('CHARSET',$charset_html);
-//ViewPort del HEAD
-$viewPort=new ViewPortTag(ViewPortTag::DEVICE_WIDTH,1,1);
-define  ('VIEWPORT',$viewPort);
-// Configuración de la variable contenido de la cabecera HEAD (titulo , author , descripción)
-$contentHead=New HeadContentTag(TITLE,AUTHOR,DESCRIPTION);
-define('CONTENT_HEAD',$contentHead);
-// Lista de los iconos Favicons a cargar por la página.
-$listIcons=New IconsTag();
-$listIcons->addIcon(New Icono(Icono::REL_BASIC,'direccion del Icono',100,100));
-$listIcons->addIcon(New Icono(Icono::REL_APPLE,'direccion del Icono',100,100));
-define('LIST_ICONS',$listIcons);
-//Lista de links del HEAD incluido los CSS FILES
-$links=New LinksTag();//Creación del objeto
-$links->addLink(new Link(Link::STYLESHEET,CSS_BASIC_FILE));//Usar el método addLink para ir añadiendo diferentes links
-$links->addLink(new Link(Link::STYLESHEET,CSS_BOOTSTRAP));
-define('LINKS',$links);
-//Lista de Script externos de JavaScript
-$externalJavaScripts=New SrcJavaScriptsTag(); //Creación del objeto
-$externalJavaScripts->addSrc('Mi Java script');//Usar el método addSrc para añadir diferentes rutas de archivos JavaScript
-define('EXTERNAL_JAVASCRIPT',$externalJavaScripts);
-//Social
-//FaceBook Open Graph
-$faceBookOpenGraph=new FacebookOpenGraphTag(
-    new Contenido('titulo','descripcion','url','author'), 
-    new Imagen('direccion','alt'),'appId','type','site_name','locale');
-define('FACEBOOK_OPENGRAPH',$faceBookOpenGraph);
+
+//***VARIABLES PARA EL HEAD DE LA PAGINA WEB */
+
+//"width" y "height" de la variable $viewPort tienen valores contenidos en la clase HtmlTags(VIEWPORT_DEVICE_WITDH Y VIEWPORT_DEVICE_HEIGHT)
+define("HEAD_CONTENT",["charset"=>'utf-8',"author"=>'Author',"description"=>'Description',"title"=>'Title',
+"viewport"=>["width"=>HtmlTags::VIEWPORT_DEVICE_WIDTH,"heigth"=>'',"initialScale"=>0,"minimunScale"=>0,"maximumScale"=>0,"userScalable"=>'']]);
+
+
+$favicon=[];
+// "rel" de la variable $icon tienen valores contenidos en la clase HtmlTags (ICON_REL_BASIC,ICON_REL_BASIC_OLD,ICON_REL_APPLE)
+
+$favicon[]=["rel"=>HtmlTags::ICON_REL_BASIC,"src"=>'#', "width"=>100,"heigth"=>100];;//ir añadiendo iconos al array
+$favicon[]=["rel"=>HtmlTags::ICON_REL_APPLE,"src"=>'#', "width"=>100,"heigth"=>100];;//ir añadiendo iconos al array
+
+define("FAVICONS",$favicon);
+
+//"rel" de la variable $link tienen valores contenidos en la clase HtmlTags
+//( LINK_STYLESHEET,LINK_CANONICAL,LINK_AMPHTML,LINK_MANIFEST,LINK_AUTHOR,
+//  LINK_LICENSE,LINK_ALTERNATE,LINK_ME,LINK_ARCHIVES,LINK_INDEX,LINK_SELF_REL,
+//  LINK_FIRST,LINK_LAST,LINK_PREV,LINK_NEXT,LINK_EDITURI,LINK_PINGBACK,LINK_WEBMENTION
+//  LINK_MICROPUB,LINK_SEARCH,LINK_DNS_PREFETCH,LINK_PRECONNECT,LINK_PREFETCH
+//  LINK_PRERENDER,LINK_PRELOAD)
+
+$lnks=[];
+$links[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/bootstrap.min.css',"asto"=>'',"type"=>'',"title"=>''];;//Ir añadiendo links al array.
+$links[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/starter-template.css',"asto"=>'',"type"=>'',"title"=>''];;//Ir añadiendo links al array.
+define("LINKS_HEAD",$links);
+
+define ("EXTERNAL_JAVA_SCRIPTS",["js/bootstrap.bundle.min.js","#"]);
+
+//Social Media
+
+//FaceBook
+$contenido=["title"=>'Title',"description"=>'Description',"url"=>'#',"author"=>'Author'];
+$img=["src"=>'#',"alt"=>'Alt'];
+define("FACEBOOKOPENGRAPH",["content"=>$contenido,"img"=>$img,"appid"=>'',"type"=>'',"sitename"=>'',"locale"=>'']);
+
+
 //Twitter
-$twitterCard=new TwitterCardTag(
-    new Contenido('titulo','descripcion','url','author'), 
-    new Imagen('direccion','alt'),'card','site');  
-define('TWITTER_CARD',$twitterCard);
+
+//Se pueden usar los arrays $contenido y $img de Social Media de Facebook.
+//$contenido=["title"=>'',"description"=>'',"url"=>'',"author"=>''];
+//$img=["src"=>'',"alt"=>''];
+define('TWITTER_CARD',["content"=>$contenido,"img"=>$img,"card"=>'',"site"=>'']);
+
+//** VARIABLES PARA EL NAV DE LA PAGINA WEB */
+
+//Deficinicion del array asociativo para las listas
+//["type"=>Tipo de lista se obtiene de los valores de HtmlTag como LIST_ORDERED,LIST_UNORDERED,LIST_ARTICLE,HYPERLINK=
+//  "id"=>Identidicador del item de la lista,
+//  "method"=>En el caso de un menu se puede indicar que es un menu desplegable con el valor de HtmlTag LIST_DROPDOWM,
+//  "include"=>Nuevo Array asociativo con todos los Arrays de lista que estan incluidos dentro de esta lista.
+//  "title"=>Titulo de la lista,
+//  "src"=>Dirección de Hyperlink donde nos envía ese item de la lista
+
+
+
+$item1=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>HtmlTags::LIST_ACTIVE,"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>'',"title"=>'',"src"=>'']];
+$item2=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>'',"title"=>'',"src"=>'']];
+$item3=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>HtmlTags::HYPERLINK_DISABLED,"title"=>'',"src"=>'']];
+$subMenu4=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>
+            [["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>'',"title"=>'',"src"=>'']],
+            ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>'',"title"=>'',"src"=>'']],
+            ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>'',"title"=>'',"src"=>'']],
+            ]];
+$item4=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>HtmlTags::LIST_DROPDOWN,"title"=>'',"src"=>'',"include"=>
+        [["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>'',"title"=>'',"src"=>''],
+        $subMenu4]];
+
+$nav=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>[
+        $item1,$item2,$item3,$item4]];
+
+
+$item1=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item1',"method"=>HtmlTags::LIST_ACTIVE,"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item1',"method"=>'',"title"=>'Hyperlink',"src"=>'#']];
+$item2=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item2',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item2',"method"=>'',"title"=>'Hyperlink',"src"=>'#']];
+$item3=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item3',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item3',"method"=>HtmlTags::HYPERLINK_DISABLED,"title"=>'Hyperlink',"src"=>'#']];
+$subMenu4=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem4',"method"=>'',"title"=>'',"src"=>'',"include"=>
+                [["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item1',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item1',"method"=>'',"title"=>'Hyperlink',"src"=>'#']],
+                ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item2',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item2',"method"=>'',"title"=>'Hyperlink',"src"=>'#']],
+                ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item2',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item2',"method"=>'',"title"=>'Hyperlink',"src"=>'#']],
+                ]];
+$item4=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item4',"method"=>HtmlTags::LIST_DROPDOWN,"title"=>'',"src"=>'',"include"=>
+        [["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinkitem4',"method"=>'',"title"=>'Hyperlink',"src"=>'#'],
+        $subMenu4]];
+
+$subMenu5=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"method"=>'',"title"=>'',"src"=>'',"include"=>
+        [["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem5item1',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem5item1',"method"=>'',"title"=>'Hyperlink',"src"=>'#']],
+        ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem5item2',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem5item2',"method"=>'',"title"=>'Hyperlink',"src"=>'#']],
+        ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem5item2',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem5item2',"method"=>'',"title"=>'Hyperlink',"src"=>'#']],
+        ]];
+$item5=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item5',"method"=>HtmlTags::LIST_DROPDOWN,"title"=>'',"src"=>'',"include"=>
+[["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinkitem5',"method"=>'',"title"=>'Hyperlink',"src"=>'#'],
+$subMenu5]];
+
+$nav=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'menu',"method"=>'',"title"=>'',"src"=>'',"include"=>[
+        $item1,$item2,$item3,$item4,$item5]];
+
+define('NAVBAR',$nav);
+
 //Idioma de la página
 $language='es';
 

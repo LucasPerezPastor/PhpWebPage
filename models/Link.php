@@ -1,31 +1,31 @@
 <?php 
 
 class Link{
-    const STYLESHEET="stylesheet";
-    const CANONICAL="canonical";
-    const AMPHTML=" amphtml";
-    const MANIFEST="manifest";
-    const AUTHOR="author";
-    const LICENSE="license";
-    const ALTERNATE="alternate";
-    const ME="me";
-    const ARCHIVES="archives";
-    const INDEX="index";
-    const SELF_REL="self";
-    const FIRST="first";
-    const LAST="last";
-    const PREV="prev";
-    const NEXT="next";
-    const EDITURI="EditURI";
-    const PINGBACK="pingback";
-    const WEBMENTION="webmention";
-    const MICROPUB="micropub";
-    const SEARCH="search";
-    const DNS_PREFETCH="dns-prefetch";
-    const PRECONNECT="preconnect";
-    const PREFETCH="prefetch";
-    const PRERENDER="prerender";
-    const PRELOAD="preload";
+    const LINK_STYLESHEET="stylesheet";
+    const LINK_CANONICAL="canonical";
+    const LINK_AMPHTML=" amphtml";
+    const LINK_MANIFEST="manifest";
+    const LINK_AUTHOR="author";
+    const LINK_LICENSE="license";
+    const LINK_ALTERNATE="alternate";
+    const LINK_ME="me";
+    const LINK_ARCHIVES="archives";
+    const LINK_INDEX="index";
+    const LINK_SELF_REL="self";
+    const LINK_FIRST="first";
+    const LINK_LAST="last";
+    const LINK_PREV="prev";
+    const LINK_NEXT="next";
+    const LINK_EDITURI="EditURI";
+    const LINK_PINGBACK="pingback";
+    const LINK_WEBMENTION="webmention";
+    const LINK_MICROPUB="micropub";
+    const LINK_SEARCH="search";
+    const LINK_DNS_PREFETCH="dns-prefetch";
+    const LINK_PRECONNECT="preconnect";
+    const LINK_PREFETCH="prefetch";
+    const LINK_PRERENDER="prerender";
+    const LINK_PRELOAD="preload";
 
     public $rel='',$src='',$asTo='',$type='',$title='';
 
