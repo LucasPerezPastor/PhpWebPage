@@ -8,7 +8,7 @@
 	<body>
       <?php
 
-    (TEMPLATE)::nav(NAVBAR);
+    (TEMPLATE)::nav(NAVBAR,"Enterprise","#",LOGO,SEARCH_FORM);
 
 
       ?>

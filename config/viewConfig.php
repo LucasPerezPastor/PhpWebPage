@@ -79,31 +79,40 @@ $nav=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'',"method"=>'',"title"=>'',"src"=>
         $item1,$item2,$item3,$item4]];
 
 
-$item1=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item1',"method"=>HtmlTags::LIST_ACTIVE,"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item1',"method"=>'',"title"=>'Hyperlink',"src"=>'#']];
-$item2=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item2',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item2',"method"=>'',"title"=>'Hyperlink',"src"=>'#']];
-$item3=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item3',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item3',"method"=>HtmlTags::HYPERLINK_DISABLED,"title"=>'Hyperlink',"src"=>'#']];
-$subMenu4=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem4',"method"=>'',"title"=>'',"src"=>'',"include"=>
-                [["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item1',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item1',"method"=>'',"title"=>'Hyperlink',"src"=>'#']],
-                ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item2',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item2',"method"=>'',"title"=>'Hyperlink',"src"=>'#']],
-                ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item2',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item2',"method"=>'',"title"=>'Hyperlink',"src"=>'#']],
+$item1=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item1',"method"=>HtmlTags::LIST_ACTIVE,"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item1',"title"=>'Hyperlink',"src"=>'#']];
+$item2=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item2',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item2',"title"=>'Hyperlink',"src"=>'#']];
+$item3=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item3',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item3',"method"=>HtmlTags::HYPERLINK_DISABLED,"title"=>'Hyperlink',"src"=>'#']];
+$subMenu4=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem4',"include"=>
+                [["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item1',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item1',"title"=>'Hyperlink',"src"=>'#']],
+                ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item2',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item2',"title"=>'Hyperlink',"src"=>'#']],
+                ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item2',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item2',"title"=>'Hyperlink',"src"=>'#']],
                 ]];
-$item4=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item4',"method"=>HtmlTags::LIST_DROPDOWN,"title"=>'',"src"=>'',"include"=>
-        [["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinkitem4',"method"=>'',"title"=>'Hyperlink',"src"=>'#'],
+$item4=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item4',"method"=>HtmlTags::LIST_DROPDOWN,"include"=>
+        [["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinkitem4',"title"=>'Hyperlink',"src"=>'#'],
         $subMenu4]];
 
-$subMenu5=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"method"=>'',"title"=>'',"src"=>'',"include"=>
-        [["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem5item1',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem5item1',"method"=>'',"title"=>'Hyperlink',"src"=>'#']],
-        ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem5item2',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem5item2',"method"=>'',"title"=>'Hyperlink',"src"=>'#']],
-        ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem5item2',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem5item2',"method"=>'',"title"=>'Hyperlink',"src"=>'#']],
+$subMenu5=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"include"=>
+        [["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#']],
+        ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#']],
+        ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#']],
         ]];
-$item5=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item5',"method"=>HtmlTags::LIST_DROPDOWN,"title"=>'',"src"=>'',"include"=>
-[["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinkitem5',"method"=>'',"title"=>'Hyperlink',"src"=>'#'],
+$item5=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item5',"method"=>HtmlTags::LIST_DROPDOWN,"include"=>
+[["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinkitem5',"title"=>'Hyperlink',"src"=>'#'],
 $subMenu5]];
 
 $nav=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'menu',"method"=>'',"title"=>'',"src"=>'',"include"=>[
         $item1,$item2,$item3,$item4,$item5]];
 
 define('NAVBAR',$nav);
+
+
+//Logo de la página
+
+define('LOGO',["src"=>"img/logo.jpg","alt"=>"Logo","width"=>100,"height"=>24]);
+
+//Formulario de búqueda
+
+define('SEARCH_FORM',["name"=>"busqueda","placeholder"=>"Búsqueda","method"=>"POST","action"=>"#"]);
 
 //Idioma de la página
 $language='es';
