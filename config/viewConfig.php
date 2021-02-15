@@ -118,5 +118,44 @@ define('SEARCH_FORM',["name"=>"busqueda","placeholder"=>"Búsqueda","method"=>"P
 $language='es';
 
 
+//Contenido del footer
+//Crearemos un array multidimensional de arrays asociativos.
+//Este array asociativo esta formado por la claves:
+        //"type"=HtmlTags::CONTENT_FOOTER || HtmlTags::LINK_FOOTER
+        //"title"= Titulo del contenido
+        //"content"= Contenido del footer en el caso de ser un CONTENT_FOOTER
+        //"include"= Array asociativo para listas con la misma estructura que el array de listas 
+        //"rel"=Relacion entre los diferentes componentes del footer , es un número que especifica
+        //      la relación de ancho entre los componentes , normalmente un CONTET_FOOTER sera un "2" de 2 a 1 
+        //      y los links seria un "1" de 1 a 1.
+        //"id"=Id del elemento
+
+//El orden de los arrays dentro del array principal es el orden de muestra de izquierda a derecha o top->bottom en el caso de pantallas pequeñas.
+
+$contentFooter=["type"=>HtmlTags::CONTENT_FOOTER,"title"=>"CONTENT FOOTER","content"=>"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
+voluptatem veniam, est atque cumque eum delectus sint!","rel"=>2];
+
+$listLink1=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"include"=>
+        [["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link1"]],
+        ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link2"]],
+        ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link3"]],
+        ]];
+
+$link1=["type"=>HtmlTags::LINK_FOOTER,"title"=>"LINK1","rel"=>1,"include"=>$listLink1];
+
+$listLink2=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"include"=>
+        [["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link1"]],
+        ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link2"]],
+        ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link3"]],
+        ]];
+
+$link2=["type"=>HtmlTags::LINK_FOOTER,"title"=>"LINK1","rel"=>3,"include"=>$listLink1];
+
+define('FOOTER',[$contentFooter,$link1,$link2]);
+
+
+
+
 
 

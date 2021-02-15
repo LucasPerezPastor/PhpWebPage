@@ -145,12 +145,13 @@ class Basic{
         $innerAriaCurrent='';//"page"
         $keys=["{type}","{id_name}","{title}","{class}","{href}","{labelledby}","{databasetoggle}","{ariaexpanded}","{tabindex}","{ariadisabled}","{ariacurrent}"];       
         if (array_key_exists("type",$navBar)){//Si existe la clave "type" es una rray asociativo
-          //Si el array NavBar  no tiene alguna de las claves=>valor las pone en valor nulo.
+          //Si el array NavBar  no tiene alguna de las claves=>valor las pone en valor vacio.
           $navType=$navBar["type"];
           $navMethod=(array_key_exists("method",$navBar))?$navBar["method"]:'';
           $navId=(array_key_exists("id",$navBar))?$navBar["id"]:'';
           $navTitle=(array_key_exists("title",$navBar))?$navBar["title"]:'';
           $navSrc=(array_key_exists("src",$navBar))?$navBar["src"]:'';
+
           if ($navType==HtmlTags::LIST_UNORDERED || $navType==HtmlTags::LIST_ORDERED){           
             if ($dropdown){
               $innerClass="dropdown-menu";
@@ -238,6 +239,7 @@ class Basic{
      * @param array $navBar
      * @param array $img
      * @param array $title
+     * @param array $search
      * @return void
      */
     public static function nav(array $navBar=NULL,string $title='',string $href="#",array $logo=NULL,array $search=NULL){
@@ -289,5 +291,122 @@ class Basic{
       <?php
     }
 
-    
+
+    public static function listExplorer(array $list=NULL,array $toClass=NULL):array
+    {
+      $out=[];     
+      //Tipos válidos para el array $list
+      $arrayType=[HtmlTags::LIST_UNORDERED,HtmlTags::LIST_ORDERED,HtmlTags::LIST_ARTICLE,HtmlTags::HYPERLINK];
+      if (!empty($list))
+      {
+       
+        $keys=["{type}","{id_name}","{title}","{class}","{href}"];       
+        if (array_key_exists("type",$list))
+        {//Si existe la clave "type" es una rray asociativo
+          //Si el array $list no tiene alguna de las claves=>valor las pone en valor vacio.
+          $listType=$list["type"];
+          $listMethod=(array_key_exists("method",$list))?$list["method"]:'';
+          $listId=(array_key_exists("id",$list))?$list["id"]:'';
+          $listTitle=(array_key_exists("title",$list))?$list["title"]:'';
+          $listSrc=(array_key_exists("src",$list))?$list["src"]:'';
+          $listRel=(array_key_exists("rel",$list))?$list["rel"]:1; //si no existe rel la relación será 1 a 1
+          $existType=array_search($listType,array_column($toClass,"type"));//Buscamos dentro del array $toClass si hay alguna key con valor $listType
+                                                                          //Si $exisType no es explicitamente false es que existe una key con el valor $listType
+                                                                          //en $exisType se guarda la posición del array que contiene esa key
+          $innerClass=($existType===false)?'':$toClass[$existType]["class"];//Si existe algun array con la key $lisType obtenemos su valor ["class"]
+          // Si en el array $toClass hay alguan clave con el valor de $listType entonces asignamos su valor a la variable $innerClass
+          if (in_array($listType,$arrayType))
+          {
+            $keys=["{type}","{id_name}","{title}","{class}","{href}"];//asignamos las palabras claves que serán substituidas en un array   
+            $words=[$listType,self::returnValue($listId,"id"),
+            $listTitle,self::returnValue($innerClass.' '.$listMethod,"class"),
+            self::returnValue($listSrc,"href"),];//asignamos el valor que substituirá a las palabras claves en otro array
+            //substituimos las palabras clave por sus valores y lo guardamos en el array $out[]
+            $out[]=str_replace($keys,$words,'<{type} {id_name} {class} {href} >{title}');
+            if (array_key_exists("include",$list)){
+              //Si existe la clave "include", hay dentro otro array por lo que llamamos recursivamente al método listExplorer
+              //para que nos devuelva un un array de strings            
+              $out=array_merge($out,self::listExplorer($list["include"],$toClass));
+            }
+            $out[]='</'.$listType.'>'; 
+          }
+        }else
+        {
+          // Al no existir la clave "type" , vamos a comprobar si dentro hay más arrays.
+          $arrs=array_filter($list,'is_array');//Filtra elementos de un array usando una función 'is_array',
+          //Devolverá un array con tantos 'true' como arrays haya dentro del array original 
+          if (count($arrs)==count($list))
+          {
+            //Determinamos que todos los elementos del array original son arrays
+            // Y pasaremos a recorrer estos arrays para llamar de forma recursiva al método y pasarle los parámetros del array
+            foreach ($list as $value) {
+              //Añadimos al array $out el resultado de pasarle de forma recursiva el array al método
+              $out=array_merge($out,self::listExplorer($value,$toClass));
+          }
+          }else
+          {
+            //El Array recibido no es válido
+          };
+        }
+      } 
+      return $out;
+    }
+
+    public static function footer(array $footer=NULL){
+      ?>
+        <!-- Footer -->
+        <footer class="bg-light text-center text-lg-start">
+          <!-- Grid container -->
+          <div class="container p-4">
+            <!--Grid row-->
+            <div class="row">
+              
+              
+              <?php 
+                if (!empty($footer) || $footer!=NULL)
+                {
+                  $width=array_sum(array_column($footer, "rel"));
+                  $elements=count($footer);  
+                  $div=($width<12)?intdiv(12,$width):1;
+                  foreach ($footer as $value) {
+                    # code...
+                    ?>
+                    <!--Grid column-->
+                    <div class="col-lg-<?php echo ($div*$value["rel"])?> col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase"><?php echo $value["title"]?></h5>                  
+                    <?php 
+                    if ($value["type"]==HtmlTags::CONTENT_FOOTER)
+                    {
+                      echo ("<p>{$value["content"]}</p>");
+                    }elseif ($value["type"]==HtmlTags::LINK_FOOTER)
+                    {
+                      // Definimos las clases a añadir en función del tipo de elemento
+                      $toClass=[["type"=>HtmlTags::LIST_UNORDERED,"class"=>"list-unstyled mb-0"],
+                                ["type"=>HtmlTags::HYPERLINK,"class"=>"text-dark"]];
+                      $list=SELF::listExplorer($value["include"],$toClass);
+                      foreach ($list as $value) {
+                        # code...
+                        echo $value;
+                      }
+                    } 
+                    echo "</div>";
+                    echo "<!--Grid column-->";
+                  }
+              }
+              ?>            
+            </div>
+            <!--Grid row-->
+          </div>
+          <!-- Grid container -->
+
+          <!-- Copyright -->
+          <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2020 Copyright:
+            <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+          </div>
+          <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
+      <?php
+    }
 }

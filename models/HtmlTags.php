@@ -46,6 +46,9 @@ class HtmlTags{
     const HYPERLINK="a";
     const HYPERLINK_DISABLED="disabled";
 
+    const CONTENT_FOOTER="cf";
+    const LINK_FOOTER="lf";
+
 
     public static function meta(string $clave='',string $value='',string $type=''):?string{
         if (empty($value) || empty($clave)){
