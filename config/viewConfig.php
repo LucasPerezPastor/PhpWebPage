@@ -31,10 +31,14 @@ define("FAVICONS",$favicon);
 
 $lnks=[];
 $links[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/bootstrap.min.css',"asto"=>'',"type"=>'',"title"=>''];;//Ir añadiendo links al array.
+//$links[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css',"asto"=>'',"type"=>'',"title"=>''];
 $links[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/starter-template.css',"asto"=>'',"type"=>'',"title"=>''];;//Ir añadiendo links al array.
+
 define("LINKS_HEAD",$links);
 
-define ("EXTERNAL_JAVA_SCRIPTS",["js/bootstrap.bundle.min.js","#"]);
+define ("EXTERNAL_JAVA_SCRIPTS",["js/jquery-3.5.1.min.js","js/bootstrap.min.js"]);
+//define ("EXTERNAL_JAVA_SCRIPTS",["https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js","https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"]);
+
 
 //Social Media
 
@@ -153,6 +157,23 @@ $listLink2=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"include"=>
 $link2=["type"=>HtmlTags::LINK_FOOTER,"title"=>"LINK1","rel"=>3,"include"=>$listLink1];
 
 define('FOOTER',[$contentFooter,$link1,$link2]);
+
+
+//Datos para el Carousel
+//Crearemos un array multidimensional de arrays asociativos.
+//Este array asociativo esta formado por la claves:
+                //"img_src"=Dirección de la unicación de la imagen.
+                //"img_alt"=Texto alternativo de la imagen.
+                //"tile"=Subtitulo del carousel.
+                //"content"=Contenido del subtitulo.
+                //"active"=Indica si es el elemento activo para que funcionen los indicadores de carousel. El valor debe ser 1 y siempre debe haber uno de los aarays con "active"=>1
+
+$carousel1=["img_src"=>"#","img_alt"=>"text alternative","title"=>"Lorem ipsum dolor sit amet consectetur","content"=>"Lorem ipsum dolor sit amet consectetur, adipisicing elit.","active"=>1];
+$carousel2=["img_src"=>"#","img_alt"=>"text alternative","title"=>"Lorem ipsum dolor sit amet consectetur","content"=>"Lorem ipsum dolor sit amet consectetur, adipisicing elit."];
+$carousel3=["img_src"=>"#","img_alt"=>"text alternative","title"=>"Lorem ipsum dolor sit amet consectetur","content"=>"Lorem ipsum dolor sit amet consectetur, adipisicing elit."];
+$carousel4=["img_src"=>"#","img_alt"=>"text alternative","title"=>"Lorem ipsum dolor sit amet consectetur","content"=>"Lorem ipsum dolor sit amet consectetur, adipisicing elit."];
+
+define("CAROUSEL",[$carousel1,$carousel2,$carousel3,$carousel4]);
 
 
 

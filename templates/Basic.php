@@ -374,23 +374,24 @@ class Basic{
                     <!--Grid column-->
                     <div class="col-lg-<?php echo ($div*$value["rel"])?> col-md-12 mb-4 mb-md-0">
                     <h5 class="text-uppercase"><?php echo $value["title"]?></h5>                  
-                    <?php 
-                    if ($value["type"]==HtmlTags::CONTENT_FOOTER)
-                    {
-                      echo ("<p>{$value["content"]}</p>");
-                    }elseif ($value["type"]==HtmlTags::LINK_FOOTER)
-                    {
-                      // Definimos las clases a añadir en función del tipo de elemento
-                      $toClass=[["type"=>HtmlTags::LIST_UNORDERED,"class"=>"list-unstyled mb-0"],
-                                ["type"=>HtmlTags::HYPERLINK,"class"=>"text-dark"]];
-                      $list=SELF::listExplorer($value["include"],$toClass);
-                      foreach ($list as $value) {
-                        # code...
-                        echo $value;
-                      }
-                    } 
-                    echo "</div>";
-                    echo "<!--Grid column-->";
+                      <?php 
+                      if ($value["type"]==HtmlTags::CONTENT_FOOTER)
+                      {
+                        echo ("<p>{$value["content"]}</p>");
+                      }elseif ($value["type"]==HtmlTags::LINK_FOOTER)
+                      {
+                        // Definimos las clases a añadir en función del tipo de elemento
+                        $toClass=[["type"=>HtmlTags::LIST_UNORDERED,"class"=>"list-unstyled mb-0"],
+                                  ["type"=>HtmlTags::HYPERLINK,"class"=>"text-dark"]];
+                        $list=SELF::listExplorer($value["include"],$toClass);
+                        foreach ($list as $value) {
+                          # code...
+                          echo $value;
+                        }
+                      } ?>
+                    </div>
+                    <!--Grid column-->
+                    <?php
                   }
               }
               ?>            
@@ -409,4 +410,66 @@ class Basic{
         <!-- Footer -->
       <?php
     }
+
+  
+    public static function carousel(array $dataCarousel=NULL)
+    {
+
+      if (!empty($dataCarousel) && $dataCarousel!=NULL)
+      {
+        ?>
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+         <div class="carousel-indicators">
+        <?php
+            $count=0;
+            foreach ($dataCarousel as $value) 
+            {
+              # code...
+              // Añadimos el valor de $count al metadadato data-slide-to para permitir el carousel
+              // comprobamos si esxiste la clave "active" en el array y en el caso que el valor
+              // de la clave sea 1 entoces añadimos la clase "active"
+              $active=array_key_exists("active",$value)?$value["active"]:0;
+              ?>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<?php echo $count?>" aria-label="Slide <?php echo ($count+1)?>" <?php echo ($active==1)?'class="active" aria-current="true"':'';?>></button>
+              <?php
+              
+              $count++;
+            }
+        ?>
+        </div>
+        <div class="carousel-inner">
+        <?php
+            foreach ($dataCarousel as $value) 
+            {
+              //Asignamos valores por defecto en función de si existen dichas claves en el array recibido
+              $active=array_key_exists("active",$value)?$value["active"]:0;
+              $imgSrc=array_key_exists("img_src",$value)?$value["img_src"]:'';
+              $imgAlt=array_key_exists("img_alt",$value)?$value["img_alt"]:'';
+              $title=array_key_exists("title",$value)?$value["title"]:'';
+              $content=array_key_exists("content",$value)?$value["content"]:''; 
+              ?>
+                <div class="carousel-item <?php echo ($active==1)?'active':'';?>">
+                <img class="d-block w-100" height="200" <?php  echo self::returnValue($imgSrc,"src")?> <?php  echo self::returnValue($imgAlt,"alt")?>>
+                  <div class="carousel-caption d-none d-md-block">
+                  <h5><?php echo $title?></h5>
+                  <p><?php echo $content?></p>
+                  </div>
+                </div>
+              <?php
+            }
+        ?>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"  data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"  data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+        <?php  
+    }
+    } 
 }
+ 

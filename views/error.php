@@ -10,7 +10,11 @@
 
     (TEMPLATE)::nav(NAVBAR,"Enterprise","#",LOGO,SEARCH_FORM);
 
-	(TEMPLATE)::footer(FOOTER);
+    (TEMPLATE)::carousel(CAROUSEL);
+
+	  (TEMPLATE)::footer(FOOTER);
+
+	
 
       ?>
   </body>
