@@ -412,13 +412,16 @@ class Basic{
     }
 
   
-    public static function carousel(array $dataCarousel=NULL)
+    public static function carousel(array $dataCarousel=NULL,bool $controls=true, bool $indicators=true)
     {
 
       if (!empty($dataCarousel) && $dataCarousel!=NULL)
       {
         ?>
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <?php
+        if ($indicators){
+        ?>
          <div class="carousel-indicators">
         <?php
             $count=0;
@@ -437,6 +440,9 @@ class Basic{
             }
         ?>
         </div>
+        <?php
+        }
+        ?>
         <div class="carousel-inner">
         <?php
             foreach ($dataCarousel as $value) 
@@ -459,6 +465,10 @@ class Basic{
             }
         ?>
         </div>
+        <?php
+        if ($controls)
+        {
+        ?>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"  data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
@@ -467,9 +477,87 @@ class Basic{
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
-    </div>
+        <?php
+        }
+        ?>
+        </div>
         <?php  
     }
-    } 
+  } 
+
+  public static function card(array $card=NULL, bool $horizontal=true){
+    // Si $horizontal = false , card estará en formato vertical con la imagen en la parte superior
+    if (!empty($card) && $card!=NULL){
+      if ($horizontal)
+      {?>
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+       <?php 
+      }else
+      {?>
+        <div class="card">
+      <?php
+      }
+            if (array_key_exists("img",$card))
+            {
+              $src=(array_key_exists("src",$card["img"]))?$card["img"]["src"]:'';
+              $alt=(array_key_exists("alt",$card["img"]))?$card["img"]["alt"]:'';
+              $width=(array_key_exists("width",$card["img"]))?'width="'.$card["img"]["width"].'"':'';
+              $height=(array_key_exists("height",$card["img"]))?'height="'.$card["img"]["height"].'"':'';
+            ?>
+              <img <?php echo $horizontal?'':'class="card-img-top"'?> src="<?php echo $src?>" alt="<?php echo $alt?>" <?php echo $width?> <?php echo $height?>>
+            <?php
+            }
+      if ($horizontal)
+      {?>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12">
+      <?php
+      }
+            ?>      
+            <div class="card-body">
+              <?php 
+              if (array_key_exists("body",$card))
+              {
+                foreach ($card["body"] as $value) {
+                  # code...
+                  if (array_key_exists("type",$value))
+                  {
+                    if ($value["type"]==HtmlTags::TITLE)
+                    {?>
+                      <h5 class="card-title"><?php echo (array_key_exists("content",$value)?$value["content"]:'')?></h5>
+                    <?php
+                    }elseif ($value["type"]==HtmlTags::TEXT)
+                    {?>
+                      <p class="card-text"><?php echo (array_key_exists("content",$value)?$value["content"]:'')?></p>
+                    <?php
+                    }elseif ($value["type"]==HtmlTags::SMALL_TEXT){
+                    ?>
+                      <p class="card-text"><small class="text-muted"><?php echo (array_key_exists("content",$value)?$value["content"]:'')?></small></p>
+                    <?php
+                    }elseif ($value["type"]==HtmlTags::LIST_UNORDERED || $value["type"]==HtmlTags::LIST_ARTICLE|| $value["type"]==HtmlTags::HYPERLINK)
+                    {
+                      // Definimos las clases a añadir en función del tipo de elemento
+                      $toClass=[["type"=>HtmlTags::LIST_UNORDERED,"class"=>"list-group"],
+                      ["type"=>HtmlTags::LIST_ARTICLE,"class"=>"list-group-item"],
+                       ["type"=>HtmlTags::HYPERLINK,"class"=>"btn btn-primary"]];
+                        $list=SELF::listExplorer($value,$toClass);
+                        foreach ($list as $value)     
+                      {
+                          # code...
+                          echo $value;
+                      }                      
+                    }
+                  }  
+                }
+              }?>             
+            </div>
+          <?php if ($horizontal){ echo "</div>";}?>
+        </div>
+      </div>   
+    <?php
+    }
+  }
 }
  

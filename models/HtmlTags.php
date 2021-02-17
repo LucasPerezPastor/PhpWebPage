@@ -49,6 +49,10 @@ class HtmlTags{
     const CONTENT_FOOTER="cf";
     const LINK_FOOTER="lf";
 
+    const TITLE="title";
+    const TEXT="text";
+    const SMALL_TEXT="smalltext";
+
 
     public static function meta(string $clave='',string $value='',string $type=''):?string{
         if (empty($value) || empty($clave)){

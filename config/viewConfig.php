@@ -176,7 +176,24 @@ $carousel4=["img_src"=>"#","img_alt"=>"text alternative","title"=>"Lorem ipsum d
 define("CAROUSEL",[$carousel1,$carousel2,$carousel3,$carousel4]);
 
 
+//Datos de las tarjetas (Card)
+//Las tarjetas contienen una imagen ["src"=>"...","alt"=>"...","width"=>0,"height"=>0]
+//Después tiene un "body" que puede contener titulos, textos , listas o textos de letra pequeña
+//Las tarjetas son un array de dos arrays [img,body] y body puede ser un array multidimensional y el orden de muestra 
+//va en función del orden del array.
 
+$img=["src"=>"...","alt"=>"...","width"=>100,"heigth"=>100];
+$firstTitle=["type"=>HtmlTags::TITLE,"content"=>"Lore ipsum dolor sit amet"];
+$secondTitle=["type"=>HtmlTags::TITLE,"content"=>"Lore ipsum dolor sit amert"];
+$firstText=["type"=>HtmlTags::TEXT,"content"=>"Lore ipsum dolor sit amet consectetur"];
+$listLink=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"include"=>
+        [["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link1"]],
+        ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link2"]],
+        ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link3"]],
+        ]];
+$body=[$firstTitle,$firstText,$secondTitle,$listLink];
+
+define("CARD_PRESENT",["img"=>$img,"body"=>$body]);
 
 
 
