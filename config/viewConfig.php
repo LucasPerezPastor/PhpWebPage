@@ -187,13 +187,19 @@ $firstTitle=["type"=>HtmlTags::TITLE,"content"=>"Lore ipsum dolor sit amet"];
 $secondTitle=["type"=>HtmlTags::TITLE,"content"=>"Lore ipsum dolor sit amert"];
 $firstText=["type"=>HtmlTags::TEXT,"content"=>"Lore ipsum dolor sit amet consectetur"];
 $listLink=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"include"=>
-        [["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link1"]],
+        [["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link1","btn"=>true]],
         ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link2"]],
         ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link3"]],
         ]];
 $body=[$firstTitle,$firstText,$secondTitle,$listLink];
 
 define("CARD_PRESENT",["img"=>$img,"body"=>$body]);
+
+
+//Grupo de tarjetas 
+//Es un array multidimensional con arrays de tarjetas dentro
+
+define ("CARD_GROUP",[CARD_PRESENT,CARD_PRESENT,CARD_PRESENT,CARD_PRESENT,CARD_PRESENT]);
 
 
 

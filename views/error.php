@@ -11,8 +11,13 @@
     (TEMPLATE)::nav(NAVBAR,"Enterprise","#",LOGO,SEARCH_FORM);
 
     (TEMPLATE)::carousel(CAROUSEL);
+	(TEMPLATE)::sectionTitle(['title'=>'About us','content'=>'Lore ipsum']);
 	(TEMPLATE)::card(CARD_PRESENT);
-	(TEMPLATE)::card(CARD_PRESENT,false);
+	(TEMPLATE)::card(CARD_PRESENT,false,true);
+	(TEMPLATE)::sectionTitle('Our Jobs ','LoreIpsum');
+	(TEMPLATE)::cardGroup(CARD_GROUP,2);
+	(TEMPLATE)::cardGroup(CARD_GROUP,3);
+	(TEMPLATE)::cardGroup(CARD_GROUP,4);
 
 	(TEMPLATE)::footer(FOOTER);
 

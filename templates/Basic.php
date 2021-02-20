@@ -292,6 +292,16 @@ class Basic{
     }
 
 
+    /**
+     * Devuelve un array con una estructura de lista en Html5 en función del array
+     * de datos recibidos por $list. Cada elemento del array nuevo generado es una línea en Html5.
+     * La variable $toClass es otro array multidimensional asociativo para indicar que clases
+     * añadir en función del tipo de elemento de lista
+     *
+     * @param array $list
+     * @param array $toClass
+     * @return array
+     */
     public static function listExplorer(array $list=NULL,array $toClass=NULL):array
     {
       $out=[];     
@@ -309,12 +319,22 @@ class Basic{
           $listId=(array_key_exists("id",$list))?$list["id"]:'';
           $listTitle=(array_key_exists("title",$list))?$list["title"]:'';
           $listSrc=(array_key_exists("src",$list))?$list["src"]:'';
+          $isButton=(array_key_exists("btn",$list))?(($list["btn"]==true)?$list["btn"]:false):false;
+
           $listRel=(array_key_exists("rel",$list))?$list["rel"]:1; //si no existe rel la relación será 1 a 1
           $existType=array_search($listType,array_column($toClass,"type"));//Buscamos dentro del array $toClass si hay alguna key con valor $listType
                                                                           //Si $exisType no es explicitamente false es que existe una key con el valor $listType
                                                                           //en $exisType se guarda la posición del array que contiene esa key
-          $innerClass=($existType===false)?'':$toClass[$existType]["class"];//Si existe algun array con la key $lisType obtenemos su valor ["class"]
-          // Si en el array $toClass hay alguan clave con el valor de $listType entonces asignamos su valor a la variable $innerClass
+
+          $innerClass=($existType===false)?'':(($isButton)?(array_key_exists("classbtn",$toClass[$existType])?$toClass[$existType]["classbtn"]:((array_key_exists("class",$toClass[$existType]))?$toClass[$existType]["class"]:''))
+          :((array_key_exists("class",$toClass[$existType]))?$toClass[$existType]["class"]:''));
+         
+
+          //Operador ternario anidado , si $exisType es explicitamente false entonces $innerClass vale '', en el caso contrario,
+          //vamos a mirar si $isButton es true por lo que si es true mirariamos si existe la clave "classbtn" para obtener su valor,
+          //si no existe esta clave miraremos si existe la clabe "class" para obtener su valor y si no existe esa clave valdrá ''
+          //en el caso que $isButton sea false miraremos si exsite la clave "class" par obtner su valor y en el caso contrario valdrá ''
+
           if (in_array($listType,$arrayType))
           {
             $keys=["{type}","{id_name}","{title}","{class}","{href}"];//asignamos las palabras claves que serán substituidas en un array   
@@ -352,6 +372,15 @@ class Basic{
       return $out;
     }
 
+    /**
+     * Genera el footer de la página.
+     * Recibe un array $footer en el que se indica si hay titulo con texto y si hay listas de navegación.
+     * Cada elemento que se le indica , también indica la relación de ancho entre ellos. Siendo la suma de todos <12.
+     * En el caso que la suma de relaciones supere 12 las relacones pasarán a ser de 1 a 1
+     *
+     * @param array $footer
+     * @return void
+     */
     public static function footer(array $footer=NULL){
       ?>
         <!-- Footer -->
@@ -411,7 +440,17 @@ class Basic{
       <?php
     }
 
-  
+    /**
+     * Genera un carousel de imágenes con texto. Las imáagenes con titulo y descripción vienen dadas por el 
+     * array $data Carousel. La variable booleana $controls indica si queremos que que salgan las flechas de 
+     * "prev" y "next". La variable $indicators indica si queremos que salgan unos indicadores sobre la página
+     * la el contenido que estamos.
+     *
+     * @param array $dataCarousel
+     * @param boolean $controls
+     * @param boolean $indicators
+     * @return void
+     */
     public static function carousel(array $dataCarousel=NULL,bool $controls=true, bool $indicators=true)
     {
 
@@ -485,6 +524,17 @@ class Basic{
     }
   } 
 
+
+  /**
+   * Genera una tarjeta establecida por los valores del array $card.
+   * En este array esta definido la imagen , si tiene títulos , contenido , listas o texto en pequeño.
+   * La variable $horizontal indica si queremos una tarjeta en horizontal en este caso el valor es true 
+   * o en vertical en este caso el valor sería false.
+   *
+   * @param array $card
+   * @param boolean $horizontal
+   * @return void
+   */
   public static function card(array $card=NULL, bool $horizontal=true){
     // Si $horizontal = false , card estará en formato vertical con la imagen en la parte superior
     if (!empty($card) && $card!=NULL){
@@ -541,7 +591,7 @@ class Basic{
                       // Definimos las clases a añadir en función del tipo de elemento
                       $toClass=[["type"=>HtmlTags::LIST_UNORDERED,"class"=>"list-group"],
                       ["type"=>HtmlTags::LIST_ARTICLE,"class"=>"list-group-item"],
-                       ["type"=>HtmlTags::HYPERLINK,"class"=>"btn btn-primary"]];
+                       ["type"=>HtmlTags::HYPERLINK,"class"=>"card-link","classbtn"=>"btn btn-primary"]];
                         $list=SELF::listExplorer($value,$toClass);
                         foreach ($list as $value)     
                       {
@@ -557,6 +607,84 @@ class Basic{
         </div>
       </div>   
     <?php
+    }
+  }
+
+  /**
+   * Genera un grupo de tarjetas a partir del array $cards que contiene arrays tipo $card.
+   * La variable $columns indica de cuantas columnas será el grupo de terjetas.
+   *
+   * @param array $cards
+   * @param integer $columns
+   * @return void
+   */
+  public static function cardGroup(array $cards=NULL, int $columns=1)
+  {
+    ?>    
+    <div class="row row-cols-1 row-cols-md-<?php echo $columns;?> g-4">
+      <?php 
+        if (!empty($cards) && $cards!=NULL)
+        {
+          foreach ($cards as $value) 
+          {
+            # code...
+            ?>
+            <div class="col">
+            <?php
+              self::card($value);
+            ?>
+            </div>
+            <?php
+          }
+        }
+    ?>
+    </div>
+    <?php    
+  }
+
+  public static function sectionTitle($title=NULL, string $content='')
+  {
+    $innerTitle='';
+    $innerContent='';
+    if (!empty($title) && $title!=NULL)
+    {
+      if (is_array($title))
+      {
+        # si es un array los valores de 'title' y de 'content' deberían venir dentro.
+          if (array_key_exists("title",$title))
+          {
+            # ponemos  el título
+            $innerTitle=$title['title'];
+            if (array_key_exists("content",$title))
+            {
+              #ponemos el contenido
+              $innerContent=$title['content'];
+            }else
+            {
+              if (!empty($content))
+              {
+                # si no esta la clave content en el array buscamos si el contenido viene dado por $content
+                $innerContent=$content;
+              }
+            }
+          }
+      }else
+      {
+        # no es un array por lo que el titulo vendrá en la variable $title y el contenido en la variable $content
+        # ponemos el titulo
+        $innerTitle=$title;
+        if (!empty($content))
+          {
+            # si no esta la clave content en el array buscamos si el contenido viene dado por $content
+            $innerContent=$content;
+          }
+      }
+      ?>
+      <div class="section-title">
+        <h6><?php echo $innerTitle;?></h6>
+        <h2><?php echo $innerContent;?></h2>
+      </div>
+      <?php
     }
   }
 }
