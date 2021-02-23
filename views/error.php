@@ -21,6 +21,10 @@
 
 	(TEMPLATE)::footer(FOOTER);
 
+	(TEMPLATE)::makeModal(['class'=>'modal-xl']);
+
+	(TEMPLATE)::warningCookies(['']);
+
 	
 
       ?>

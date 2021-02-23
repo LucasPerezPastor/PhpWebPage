@@ -1,5 +1,5 @@
 <?php
-class Basic{
+class Basic extends HtmlTags{
 
     
   
@@ -74,23 +74,7 @@ class Basic{
       };
     }
 
-    /**
-     * Devuelve un string con la estructura $nameVariable="$variable" 
-     * en el caso que $variable tenga algun valor válido sino 
-     * devuelve un string vacio
-     *
-     * @param string $variable
-     * @param string $nameVariable
-     * @return string
-     */
-    public static function returnValue(string $variable='',string $nameVariable=''):string{
-      if (!empty($variable) && str_replace(' ','',$variable)<>''){
-        return $nameVariable.'="'.trim($variable).'"';
-      }else{
-        return '';
-      }
-    }
-
+    
 
      //Creacion del NAV de la página web
 
@@ -381,7 +365,7 @@ class Basic{
      * @param array $footer
      * @return void
      */
-    public static function footer(array $footer=NULL){
+    public static function footer(array $footer=NULL,array $informationFooter=NULL){
       ?>
         <!-- Footer -->
         <footer class="bg-light text-center text-lg-start">
@@ -428,17 +412,195 @@ class Basic{
             <!--Grid row-->
           </div>
           <!-- Grid container -->
-
-          <!-- Copyright -->
-          <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-            © 2020 Copyright:
-            <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+          <?php
+          if (!empty($informationFooter) && $informationFooter!=NULL)
+          {?>
+            <div class="p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+              <div class="col-lg-3 col-md-3 col-sm-12 text-start">TODO
+                <?php echo (array_key_exists('copyright',$informationFooter)?$informationFooter['copyright']:'')?>
+              </div>
+              <div class="col-lg-6 col-md-8 col-sm-12 text-center">
+              <?php echo (array_key_exists('legaladvice',$informationFooter)?$informationFooter['copyright']:'')?>
+              <?php echo (array_key_exists('privacypolicy',$informationFooter)?$informationFooter['copyright']:'')?>
+              <?php echo (array_key_exists('cookiespolicy',$informationFooter)?$informationFooter['copyright']:'')?>
+              </div>
+            
           </div>
-          <!-- Copyright -->
+          <?php
+          }
+          ?>
+         
         </footer>
         <!-- Footer -->
       <?php
     }
+
+
+    public static function warning(array $warning,array $options=NULL)
+    {
+      # $button=["id"=>'','title'=>'','class_button=>''];
+      # $warning=['id'=>'','title'=>'','body'=>['',''','',''],'buttons'=>[$button,$button]];
+      # $options=['class'=>'','position'=>''];
+      if (!empty($warning))
+      {
+        if (!empty($options) && $options!=NULL){
+          $top=(array_key_exists('position',$options))?(($options['position']=='top')?true:false):false;
+          $innerClass=(array_key_exists('class',$options))?$options['class']:'';
+
+  
+        }else
+        {
+          $top=false;
+          $innerClass='';
+
+        }
+        ?>
+        <div <?php echo (array_key_exists('id',$warning))?self::returnValue($warning['id'],'id'):''; ?> class="fixed-<?php echo ($top)?'top':'bottom'?> modal-dialog modal-xl <?php echo $innerClass;?>">
+          <div class="modal-content">
+                <div class="modal-header" style='border: none;'>
+                  <h5 class="modal-title"><?php echo (array_key_exists('title',$warning))?$warning['title']:''; ?></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style='border: none;'>
+                <?php
+                  if (array_key_exists('body',$warning))
+                    {
+                      foreach ($warning['body'] as $value) 
+                      {
+                        # code...
+                        echo "<p>{$value}</p>";
+                      }
+                    }
+                ?>
+                </div>
+                <div class="modal-footer" style='border: none;'>
+                <?php
+                if (array_key_exists('buttons',$warning))
+                    {
+                      foreach ($warning['buttons'] as $value) 
+                      {
+                        # code...
+                        ?>
+                        <button type="button" <?php echo (array_key_exists('id',$value))?self::returnValue($value['id'],'id'):''; ?>  class="btn <?php echo (array_key_exists('class',$value))?$value['class']:''; ?>" data-bs-dismiss="modal">
+                        <?php echo (array_key_exists('title',$value))?$value['title']:''; ?></button>
+                       
+
+                        <button type="button" <?php echo (array_key_exists('id',$value)?self::returnValue($value['id'],'id'):'')?> 
+                        class="btn <?php echo (array_key_exists('class',$value)?$value['class_btn']:'btn-secondary')?>" 
+                        <?php echo (array_key_exists('type',$value)?(($value['type'==HtmlTags::BUTTON_CLOSE])?:'data-bs-dismiss="modal"'):'')?> 
+                        >
+                        <?php echo (array_key_exists('title',$value)?$value['title']:'')?></button>
+
+                        <?php
+                      }
+                    }
+                ?>
+                
+                </div>
+          </div>
+        </div>
+        <?php
+      } 
+    }
+
+
+    public static function linkModal(string $targetLink='',array $externalLink=NULL):string
+    {
+       # $externalLink=['container_class'=>'','id'=>'','type'=>'','class'=>'','title'=>''];
+        # 'type' de $externalLink puede ser HtmlTags::HYPERLINK o HtmlTags::BUTTON
+
+      $out='';
+
+      if (!empty($externalLink) && $externalLink!=NULL)
+      {
+        $containerClass= array_key_exists('container_class',$externalLink)?self::returnValue($externalLink['container_class'],'class'):'';
+        $typeLink=array_key_exists('type',$externalLink)?
+        (($externalLink['type']==HtmlTags::HYPERLINK || $externalLink['type']==HtmlTags::BUTTON)?$externalLink['type']:HtmlTags::BUTTON):HtmlTags::BUTTON;
+        $linkTitle=array_key_exists('title',$externalLink)?$externalLink['title']:'';
+        $linkClass=array_key_exists('class',$externalLink)?$externalLink['class']:'';
+        $linkId=array_key_exists('id',$externalLink)?self::returnValue($externalLink['id'],'id'):'';
+      }else
+      {
+        $containerClass='';
+        $typeLink=HtmlTags::BUTTON;
+        $linkTitle="Modal {$targetLink}";
+        $linkClass="btn-primary";
+        $linkId='';
+      }
+      $out="<div {$containerClass}>".PHP_EOL;
+      $out.= '<'.$typeLink.' '.$linkId.' '.(($typeLink==HtmlTags::BUTTON)?'type="button"':'').(self::returnValue((($typeLink==HtmlTags::BUTTON)?'btn ':'').$linkClass,'class')).
+      ' data-bs-toggle="modal" data-bs-target="#'.$targetLink.'" >'.$linkTitle.'</'.$typeLink.'>'.PHP_EOL;
+      $out.="</div>".PHP_EOL;
+      /*
+      ?>
+        <div <?php echo $containerClass?>>
+        <?php
+          echo '<'.$typeLink.' '.$linkId.' '.(($typeLink==HtmlTags::BUTTON)?'type="button"':'').(self::returnValue((($typeLink==HtmlTags::BUTTON)?'btn ':'').$linkClass,'class')).
+          ' data-bs-toggle="modal" data-bs-target="#'.$targetLink.'" >'.$linkTitle.'</'.$typeLink.'>';
+        ?>
+        </div>
+        <?php
+        */
+        return $out;
+    }
+    
+    public static function makeModal(array $modal=NULL, array $externalLink=NULL){
+      # $modal=['id'=>'','title'=>'','class'=>'','body'=>['','','',''],buttons=>[[type=>'close',class_btn=>'btn-secondary',id=>'',title=>'Close']]]
+      # $externalLink=['container_class'=>'','id'=>'','type'=>'','class'=>'','title'=>''];
+      # 'type' de $externalLink puede ser HtmlTags::HYPERLINK o HtmlTags::BUTTON
+      if (!empty($modal) && $modal!=NULL)
+      {
+      $id=array_key_exists('id',$modal)?$modal['id']:((array_key_exists('title',$modal))?$modal['title'].'ModalCenteredScrollable':'ModalCenteredScrollable');
+      $idAriaLabelledBy=$id.'title';
+      ?>
+      <div class="modal fade " id="<?php echo $id?>" tabindex="-1" aria-labelledby="<?php echo $idAriaLabelledBy?>" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable <?php echo (array_key_exists('class',$modal)?$modal['class']:'')?>">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="<?php echo $idAriaLabelledBy?>"><?php echo (array_key_exists('title',$modal)?$modal['title']:'')?></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <?php
+                if (array_key_exists('body',$modal))
+                {
+                  foreach ($modal['body'] as $value) {
+                    # code...
+                    echo "<p>{$value}</p>";
+                  }
+                }
+              ?>
+            </div>
+            <div class="modal-footer">
+              <?php if (array_key_exists('buttons',$modal))
+              {
+                foreach ($modal['buttons'] as $button) 
+                {
+                  # code...
+                  # Buscamos dentro del array buttons y vamos imprimiendo los buttons que existan
+                  # en el caso que el button sea del tipo BUTTON_CLOSE añadimos "data-bs-dismiss="modal"
+                  # si no hay especificado la clase del button sera del tipo btn-secondary
+                ?>
+                <button type="button" <?php echo (array_key_exists('id',$button)?self::returnValue($button['id'],'id'):'')?> 
+                class="btn <?php echo (array_key_exists('class_btn',$button)?$button['class_btn']:'btn-secondary')?>" 
+                <?php echo (array_key_exists('type',$button)?(($button['type'==HtmlTags::BUTTON_CLOSE])?:'data-bs-dismiss="modal"'):'')?> 
+                >
+                <?php echo (array_key_exists('title',$button)?$button['title']:'')?></button>
+              <?php
+                }
+              }
+              ?>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?php
+      echo self::linkModal($id,$externalLink);
+      }
+    }
+
+
+
 
     /**
      * Genera un carousel de imágenes con texto. Las imáagenes con titulo y descripción vienen dadas por el 

@@ -53,6 +53,12 @@ class HtmlTags{
     const TEXT="text";
     const SMALL_TEXT="smalltext";
 
+    const BUTTON_CLOSE="btn-close";
+    const BUTTON="button";
+
+    const BUTTON_CLOSE_MODAL="btnclsmod";
+    const BUTTON_TARGET_MODAL="btntgmod";
+
 
     public static function meta(string $clave='',string $value='',string $type=''):?string{
         if (empty($value) || empty($clave)){
@@ -86,6 +92,30 @@ class HtmlTags{
         
     }
 
+    /**
+     * Devuelve un string con la estructura $nameVariable="$preVariable $variable" 
+     * en el caso que $variable tenga algun valor válido sino 
+     * devuelve un string vacio salvo que $preVariable tenga valor por lo que 
+     * devolvería $nameVariable="$preVariable"
+     *
+     * @param string $variable
+     * @param string $nameVariable
+     * @param string $preVariable
+     * @return string
+     */
+    public static function returnValue(string $variable='',string $nameVariable='',string $preVariable=''):string{
+        $out='';
+        if (!empty($variable) && str_replace(' ','',$variable)<>''){
+          if (!empty($preVariable)){$variable=$preVariable.' '.$variable;}  
+          $out= $nameVariable.'="'.trim($variable).'"';
+        }elseif (!empty($preVariable) && !empty($nameVariable))
+        {
+            $out= $nameVariable.'="'.$preVariable.'"';
+        }
+        return $out;
+      }
+
+      
     public static function srcJavaScript($src=''){
         return '<script src="'.$src.'"></script>';
     }
@@ -108,6 +138,31 @@ class HtmlTags{
             return HtmlTags::meta('viewport',$out,'name').PHP_EOL;
         }
        
+    }
+
+    public static function button(&$button):string
+    {
+        #$button=["id"=>'','title'=>'','class'=>'','type'=>'','target_modal'=>''];
+        # Type puede ser vacio, BUTTON_CLOSE_MODAL , BUTTON_TARGET_MODAL
+
+        $out='';
+        if (is_array($button) && !empty($button) && $button==NULL)
+        {
+            $id=array_key_exists('id',$button)?self::returnValue($button['id'],'id'):'';
+            $title=array_key_exists('title',$button)?$button['title']:'';
+            $class=self::returnValue((array_key_exists('class',$button)?$button['class']:''),'class','btn');
+            $type=array_key_exists('type',$button)?$button['type']:'';
+            $target=array_key_exists('target_modal',$button)?self::returnValue($button['target_modal'],'data-bs-target'):'';
+            if ($type===self::BUTTON_CLOSE_MODAL)
+            {
+              $innerType='data-bs-dismiss="modal"';    
+            }elseif ($type===self::BUTTON_TARGET_MODAL)
+            {
+               $innerType= 'data-bs-toggle="modal"'.$target;
+            }else{$innerType='';}
+        }
+        $out="<button type=\"button\" {$id} {$class} {$type} {$target}>{$title}</button>";    
+        return $out;
     }
 
 }
