@@ -21,13 +21,19 @@
 
 	(TEMPLATE)::footer(FOOTER);
 
-	(TEMPLATE)::makeModal(['class'=>'modal-xl']);
+	(TEMPLATE)::makeModal(['id'=>'textCookies','buttons'=>[['type'=>HtmlTags::BUTTON_CLOSE_MODAL,'title'=>'another']]]);
+	(TEMPLATE)::makeModal(['id'=>'warningCookies','class'=>HtmlTags::STYLE_MODAL_DIALOG_END.' modal-xl '.HtmlTags::STYLE_NO_BORDER,
+	'buttons'=>[['type'=>HtmlTags::BUTTON_CLOSE_MODAL,'title'=>'close'],
+				['type'=>HtmlTags::BUTTON_TARGET_MODAL,'target_modal'=>'textCookies','title'=>'cookies']]]);
+	echo (TEMPLATE)::linkModal('warningCookies',['type'=>HtmlTags::BUTTON,'title'=>'warning']);
 
-	(TEMPLATE)::warningCookies(['']);
+	
+	
 
 	
 
       ?>
+	  
   </body>
 	
 </HTML>

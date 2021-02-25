@@ -59,6 +59,11 @@ class HtmlTags{
     const BUTTON_CLOSE_MODAL="btnclsmod";
     const BUTTON_TARGET_MODAL="btntgmod";
 
+    const STYLE_MODAL_DIALOG_CENTERED="modal-dialog-centered";
+    const STYLE_MODAL_DIALOG_START="modal-dialog-start";
+    const STYLE_MODAL_DIALOG_END="modal-dialog-end";
+    const STYLE_NO_BORDER="no-border";
+
 
     public static function meta(string $clave='',string $value='',string $type=''):?string{
         if (empty($value) || empty($clave)){
@@ -140,29 +145,132 @@ class HtmlTags{
        
     }
 
-    public static function button(&$button):string
+    public static function button(&$button, string $defaultClass=''):string
     {
         #$button=["id"=>'','title'=>'','class'=>'','type'=>'','target_modal'=>''];
         # Type puede ser vacio, BUTTON_CLOSE_MODAL , BUTTON_TARGET_MODAL
+        # en el caso que el button sea del tipo BUTTON_CLOSE_MODAL añadimos "data-bs-dismiss="modal"
+        # en el caso que el button sea del tipo BUTTON_TARGET_MODAL añadimos " data-bs-dismiss="modal" data-bs-toggle="modal data-bs-target="#{nombre del id del modal}" "
 
         $out='';
-        if (is_array($button) && !empty($button) && $button==NULL)
+       
+        
+        if (is_array($button) && !empty($button) && $button!=NULL)
         {
             $id=array_key_exists('id',$button)?self::returnValue($button['id'],'id'):'';
             $title=array_key_exists('title',$button)?$button['title']:'';
-            $class=self::returnValue((array_key_exists('class',$button)?$button['class']:''),'class','btn');
+            $class=self::returnValue((array_key_exists('class',$button)?$button['class']:(!empty($defaultClass)?$defaultClass:'')),'class','btn');
             $type=array_key_exists('type',$button)?$button['type']:'';
-            $target=array_key_exists('target_modal',$button)?self::returnValue($button['target_modal'],'data-bs-target'):'';
-            if ($type===self::BUTTON_CLOSE_MODAL)
+            $target=array_key_exists('target_modal',$button)?self::returnValue('#'.$button['target_modal'],'data-bs-target'):'';
+            if ($type==self::BUTTON_CLOSE_MODAL || $type==self::BUTTON_TARGET_MODAL)
             {
-              $innerType='data-bs-dismiss="modal"';    
-            }elseif ($type===self::BUTTON_TARGET_MODAL)
-            {
-               $innerType= 'data-bs-toggle="modal"'.$target;
+              $innerType='data-bs-dismiss="modal"';//.($type==self::BUTTON_TARGET_MODAL)?' data-bs-toggle="modal"'.$target:'';    
+              if ($type==self::BUTTON_TARGET_MODAL){$innerType.=' data-bs-toggle="modal"'.$target;}
             }else{$innerType='';}
+            $out=$id.' '.$class.' '.$innerType.' '.$target;
+            $out='<button type="button" '.trim($out).'>'.$title.'</button>';  
         }
-        $out="<button type=\"button\" {$id} {$class} {$type} {$target}>{$title}</button>";    
+         
         return $out;
     }
 
+    public static function buttonToHtml(&$button,string $defaultClass='')
+    {
+        $out=self::button($button,$defaultClass);
+        if (!empty($out)){echo $out;}
+    }
+
+
+    /**
+     * Devuelve un array con una estructura de lista en Html5 en función del array
+     * de datos recibidos por $list. Cada elemento del array nuevo generado es una línea en Html5.
+     * La variable $toClass es otro array multidimensional asociativo para indicar que clases
+     * añadir en función del tipo de elemento de lista
+     *
+     * @param array $list
+     * @param array $toClass
+     * @return array
+     */
+    public static function listExplorer(&$list,array $toClass=NULL):array
+    {
+      $out=[];     
+      //Tipos válidos para el array $list
+      $arrayType=[self::LIST_UNORDERED,self::LIST_ORDERED,self::LIST_ARTICLE,self::HYPERLINK];
+      if (is_array($list) && !empty($list) && $list!=NULL)
+      {
+       
+        $keys=["{type}","{id_name}","{title}","{class}","{href}"];       
+        if (array_key_exists("type",$list))
+        {//Si existe la clave "type" es una rray asociativo
+          //Si el array $list no tiene alguna de las claves=>valor las pone en valor vacio.
+          $listType=$list["type"];
+          $listMethod=(array_key_exists("method",$list))?$list["method"]:'';
+          $listId=(array_key_exists("id",$list))?$list["id"]:'';
+          $listTitle=(array_key_exists("title",$list))?$list["title"]:'';
+          $listSrc=(array_key_exists("src",$list))?$list["src"]:'';
+          $isButton=(array_key_exists("btn",$list))?(($list["btn"]==true)?$list["btn"]:false):false;
+
+          $listRel=(array_key_exists("rel",$list))?$list["rel"]:1; //si no existe rel la relación será 1 a 1
+          if (is_array($toClass) && !empty($toClass) && $toClass!=NULL)
+          {
+            $existType=array_search($listType,array_column($toClass,"type"));//Buscamos dentro del array $toClass si hay alguna key con valor $listType
+                                                                            //Si $exisType no es explicitamente false es que existe una key con el valor $listType
+                                                                            //en $exisType se guarda la posición del array que contiene esa key
+            $innerClass=($existType===false)?'':(($isButton)?(array_key_exists("classbtn",$toClass[$existType])?$toClass[$existType]["classbtn"]:((array_key_exists("class",$toClass[$existType]))?$toClass[$existType]["class"]:''))
+            :((array_key_exists("class",$toClass[$existType]))?$toClass[$existType]["class"]:''));
+            //Operador ternario anidado , si $exisType es explicitamente false entonces $innerClass vale '', en el caso contrario,
+            //vamos a mirar si $isButton es true por lo que si es true mirariamos si existe la clave "classbtn" para obtener su valor,
+            //si no existe esta clave miraremos si existe la clabe "class" para obtener su valor y si no existe esa clave valdrá ''
+            //en el caso que $isButton sea false miraremos si exsite la clave "class" par obtner su valor y en el caso contrario valdrá ''
+          }else 
+          {
+              $innerClass='';
+          }
+
+          if (in_array($listType,$arrayType))
+          {
+            $keys=["{type}","{id_name}","{title}","{class}","{href}"];//asignamos las palabras claves que serán substituidas en un array   
+            $words=[$listType,self::returnValue($listId,"id"),
+            $listTitle,self::returnValue($innerClass.' '.$listMethod,"class"),
+            self::returnValue($listSrc,"href"),];//asignamos el valor que substituirá a las palabras claves en otro array
+            //substituimos las palabras clave por sus valores y lo guardamos en el array $out[]
+            $out[]=str_replace($keys,$words,'<{type} {id_name} {class} {href} >{title}');
+            if (array_key_exists("include",$list)){
+              //Si existe la clave "include", hay dentro otro array por lo que llamamos recursivamente al método listExplorer
+              //para que nos devuelva un un array de strings            
+              $out=array_merge($out,self::listExplorer($list["include"],$toClass));
+            }
+            $out[]='</'.$listType.'>'; 
+          }
+        }else
+        {
+          // Al no existir la clave "type" , vamos a comprobar si dentro hay más arrays.
+          $arrs=array_filter($list,'is_array');//Filtra elementos de un array usando una función 'is_array',
+          //Devolverá un array con tantos 'true' como arrays haya dentro del array original 
+          if (count($arrs)==count($list))
+          {
+            //Determinamos que todos los elementos del array original son arrays
+            // Y pasaremos a recorrer estos arrays para llamar de forma recursiva al método y pasarle los parámetros del array
+            foreach ($list as $value) {
+              //Añadimos al array $out el resultado de pasarle de forma recursiva el array al método
+              $out=array_merge($out,self::listExplorer($value,$toClass));
+          }
+          }else
+          {
+            //El Array recibido no es válido
+          };
+        }
+      } 
+      return $out;
+    }
+
+    static function listExplorerToHtml(&$list,&$toClass)
+    {
+        $out=[];
+        $out=self::listExplorer($list,$toClass);
+        foreach ($out as $value) {
+            # code...
+            echo $value;
+          }
+    }
 }

@@ -33,6 +33,7 @@ $lnks=[];
 $links[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/bootstrap.min.css',"asto"=>'',"type"=>'',"title"=>''];;//Ir añadiendo links al array.
 //$links[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css',"asto"=>'',"type"=>'',"title"=>''];
 $links[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/starter-template.css',"asto"=>'',"type"=>'',"title"=>''];;//Ir añadiendo links al array.
+$links[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/template.css',"asto"=>'',"type"=>'',"title"=>''];;//Ir añadiendo links al array.
 
 define("LINKS_HEAD",$links);
 

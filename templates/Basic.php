@@ -24,53 +24,53 @@ class Basic extends HtmlTags{
     public static function head(array $headContent=NULL,array $favicons=NULL,array $links=NULL,array $javaScripts=NULL,array $faceBookOpenGraph=NULL,array $twitterCard=NULL)
     {
       if (!is_null($headContent)){
-        echo HtmlTags::meta('charset',$headContent["charset"]).PHP_EOL;
-        echo HtmlTags::viewPort($headContent["viewport"]).PHP_EOL;
-        echo HtmlTags::title($headContent["title"]).PHP_EOL;
-        echo HtmlTags::meta('author',$headContent["author"],'name').PHP_EOL;
-        echo HtmlTags::meta('description',$headContent["description"],'name').PHP_EOL;
+        echo self::meta('charset',$headContent["charset"]).PHP_EOL;
+        echo self::viewPort($headContent["viewport"]).PHP_EOL;
+        echo self::title($headContent["title"]).PHP_EOL;
+        echo self::meta('author',$headContent["author"],'name').PHP_EOL;
+        echo self::meta('description',$headContent["description"],'name').PHP_EOL;
       };
       if (!is_null($favicons)){
         foreach ($favicons as $value) {
-          echo HtmlTags::icon($value["rel"],$value["src"],$value["width"],$value["heigth"]).PHP_EOL;
+          echo self::icon($value["rel"],$value["src"],$value["width"],$value["heigth"]).PHP_EOL;
         }
       };
       if (!is_null($links)){
         foreach ($links as $value) {
-          echo HtmlTags::link($value["rel"],$value["src"],$value["type"],$value["title"],$value["asto"]).PHP_EOL;
+          echo self::link($value["rel"],$value["src"],$value["type"],$value["title"],$value["asto"]).PHP_EOL;
         }
       };
       if (!is_null($javaScripts)){
         foreach ($javaScripts as $value) {
-          echo HtmlTags::srcJavaScript($value).PHP_EOL;
+          echo self::srcJavaScript($value).PHP_EOL;
         }
       };
       if (!is_null($faceBookOpenGraph)){
         $prop='property';
         $og='og:';
-        echo HtmlTags::meta('fb:app_id',$faceBookOpenGraph["appid"],$prop).PHP_EOL;
-        echo HtmlTags::meta($og.'title',$faceBookOpenGraph["content"]["title"],$prop).PHP_EOL;
-        echo HtmlTags::meta($og.'description',$faceBookOpenGraph["content"]["description"],$prop).PHP_EOL;
-        echo HtmlTags::meta('article:author',$faceBookOpenGraph["content"]["author"],$prop).PHP_EOL;
-        echo HtmlTags::meta($og.'url',$faceBookOpenGraph["content"]["url"],$prop).PHP_EOL;
-        echo HtmlTags::meta($og.'image',$faceBookOpenGraph["img"]["src"],$prop).PHP_EOL;
-        echo HtmlTags::meta($og.'image:alt',$faceBookOpenGraph["img"]["alt"],$prop).PHP_EOL;    
-        echo HtmlTags::meta($og.'type',$faceBookOpenGraph["type"],$prop).PHP_EOL;
-        echo HtmlTags::meta($og.'site_name',$faceBookOpenGraph["sitename"],$prop).PHP_EOL;
-        echo HtmlTags::meta($og.'locale',$faceBookOpenGraph["locale"],$prop).PHP_EOL;
+        echo self::meta('fb:app_id',$faceBookOpenGraph["appid"],$prop).PHP_EOL;
+        echo self::meta($og.'title',$faceBookOpenGraph["content"]["title"],$prop).PHP_EOL;
+        echo self::meta($og.'description',$faceBookOpenGraph["content"]["description"],$prop).PHP_EOL;
+        echo self::meta('article:author',$faceBookOpenGraph["content"]["author"],$prop).PHP_EOL;
+        echo self::meta($og.'url',$faceBookOpenGraph["content"]["url"],$prop).PHP_EOL;
+        echo self::meta($og.'image',$faceBookOpenGraph["img"]["src"],$prop).PHP_EOL;
+        echo self::meta($og.'image:alt',$faceBookOpenGraph["img"]["alt"],$prop).PHP_EOL;    
+        echo self::meta($og.'type',$faceBookOpenGraph["type"],$prop).PHP_EOL;
+        echo self::meta($og.'site_name',$faceBookOpenGraph["sitename"],$prop).PHP_EOL;
+        echo self::meta($og.'locale',$faceBookOpenGraph["locale"],$prop).PHP_EOL;
       };
       if (!is_null($twitterCard)){
         $prop='name';
         $twit='twitter:';
         $out='';
-        echo HtmlTags::meta($twit.'title',$twitterCard["content"]["title"],$prop).PHP_EOL;
-        echo HtmlTags::meta($twit.'description',$twitterCard["content"]["description"],$prop).PHP_EOL;
-        echo HtmlTags::meta($twit.'creator',$twitterCard["content"]["author"],$prop).PHP_EOL;
-        echo HtmlTags::meta($twit.'url',$twitterCard["content"]["url"],$prop).PHP_EOL;
-        echo HtmlTags::meta($twit.'image',$twitterCard["img"]["src"],$prop).PHP_EOL;
-        echo HtmlTags::meta($twit.'image:alt',$twitterCard["img"]["alt"],$prop).PHP_EOL;    
-        echo HtmlTags::meta($twit.'card',$twitterCard["card"],$prop).PHP_EOL;
-        echo HtmlTags::meta($twit.'site',$twitterCard["site"],$prop).PHP_EOL;
+        echo self::meta($twit.'title',$twitterCard["content"]["title"],$prop).PHP_EOL;
+        echo self::meta($twit.'description',$twitterCard["content"]["description"],$prop).PHP_EOL;
+        echo self::meta($twit.'creator',$twitterCard["content"]["author"],$prop).PHP_EOL;
+        echo self::meta($twit.'url',$twitterCard["content"]["url"],$prop).PHP_EOL;
+        echo self::meta($twit.'image',$twitterCard["img"]["src"],$prop).PHP_EOL;
+        echo self::meta($twit.'image:alt',$twitterCard["img"]["alt"],$prop).PHP_EOL;    
+        echo self::meta($twit.'card',$twitterCard["card"],$prop).PHP_EOL;
+        echo self::meta($twit.'site',$twitterCard["site"],$prop).PHP_EOL;
       };
     }
 
@@ -136,7 +136,7 @@ class Basic extends HtmlTags{
           $navTitle=(array_key_exists("title",$navBar))?$navBar["title"]:'';
           $navSrc=(array_key_exists("src",$navBar))?$navBar["src"]:'';
 
-          if ($navType==HtmlTags::LIST_UNORDERED || $navType==HtmlTags::LIST_ORDERED){           
+          if ($navType==self::LIST_UNORDERED || $navType==self::LIST_ORDERED){           
             if ($dropdown){
               $innerClass="dropdown-menu";
               $labelledBy=$id;
@@ -149,26 +149,26 @@ class Basic extends HtmlTags{
               $class="nav-item";
               $dropdown=false;
             }          
-          }elseif($navType==HtmlTags::LIST_ARTICLE)
+          }elseif($navType==self::LIST_ARTICLE)
           {  
             if ($dropdown){  
               $class='dropdown-item';
             }else{
-              $dropdown=($navMethod==HtmlTags::LIST_DROPDOWN)?true:false;              
+              $dropdown=($navMethod==self::LIST_DROPDOWN)?true:false;              
               $innerClass=$class;
               $class="nav-link";
               if ($dropdown){
                  $class.=" dropdown-toggle";
-                 $dataBSToggle=HtmlTags::LIST_DROPDOWN;
+                 $dataBSToggle=self::LIST_DROPDOWN;
                  $ariaExpanded="false";
               };
-              if (strstr($navMethod,HtmlTags::LIST_ACTIVE)){
+              if (strstr($navMethod,self::LIST_ACTIVE)){
                 $ariaCurrent="page";
               }
             }
-          }elseif ($navType==HtmlTags::HYPERLINK)         
+          }elseif ($navType==self::HYPERLINK)         
            {
-            if (strstr($navMethod,HtmlTags::HYPERLINK_DISABLED)){
+            if (strstr($navMethod,self::HYPERLINK_DISABLED)){
             //<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
             $innerTabindex="-1";//"-1" 
             $innerAriaDisabled="true";//"true"           
@@ -276,85 +276,7 @@ class Basic extends HtmlTags{
     }
 
 
-    /**
-     * Devuelve un array con una estructura de lista en Html5 en función del array
-     * de datos recibidos por $list. Cada elemento del array nuevo generado es una línea en Html5.
-     * La variable $toClass es otro array multidimensional asociativo para indicar que clases
-     * añadir en función del tipo de elemento de lista
-     *
-     * @param array $list
-     * @param array $toClass
-     * @return array
-     */
-    public static function listExplorer(array $list=NULL,array $toClass=NULL):array
-    {
-      $out=[];     
-      //Tipos válidos para el array $list
-      $arrayType=[HtmlTags::LIST_UNORDERED,HtmlTags::LIST_ORDERED,HtmlTags::LIST_ARTICLE,HtmlTags::HYPERLINK];
-      if (!empty($list))
-      {
-       
-        $keys=["{type}","{id_name}","{title}","{class}","{href}"];       
-        if (array_key_exists("type",$list))
-        {//Si existe la clave "type" es una rray asociativo
-          //Si el array $list no tiene alguna de las claves=>valor las pone en valor vacio.
-          $listType=$list["type"];
-          $listMethod=(array_key_exists("method",$list))?$list["method"]:'';
-          $listId=(array_key_exists("id",$list))?$list["id"]:'';
-          $listTitle=(array_key_exists("title",$list))?$list["title"]:'';
-          $listSrc=(array_key_exists("src",$list))?$list["src"]:'';
-          $isButton=(array_key_exists("btn",$list))?(($list["btn"]==true)?$list["btn"]:false):false;
-
-          $listRel=(array_key_exists("rel",$list))?$list["rel"]:1; //si no existe rel la relación será 1 a 1
-          $existType=array_search($listType,array_column($toClass,"type"));//Buscamos dentro del array $toClass si hay alguna key con valor $listType
-                                                                          //Si $exisType no es explicitamente false es que existe una key con el valor $listType
-                                                                          //en $exisType se guarda la posición del array que contiene esa key
-
-          $innerClass=($existType===false)?'':(($isButton)?(array_key_exists("classbtn",$toClass[$existType])?$toClass[$existType]["classbtn"]:((array_key_exists("class",$toClass[$existType]))?$toClass[$existType]["class"]:''))
-          :((array_key_exists("class",$toClass[$existType]))?$toClass[$existType]["class"]:''));
-         
-
-          //Operador ternario anidado , si $exisType es explicitamente false entonces $innerClass vale '', en el caso contrario,
-          //vamos a mirar si $isButton es true por lo que si es true mirariamos si existe la clave "classbtn" para obtener su valor,
-          //si no existe esta clave miraremos si existe la clabe "class" para obtener su valor y si no existe esa clave valdrá ''
-          //en el caso que $isButton sea false miraremos si exsite la clave "class" par obtner su valor y en el caso contrario valdrá ''
-
-          if (in_array($listType,$arrayType))
-          {
-            $keys=["{type}","{id_name}","{title}","{class}","{href}"];//asignamos las palabras claves que serán substituidas en un array   
-            $words=[$listType,self::returnValue($listId,"id"),
-            $listTitle,self::returnValue($innerClass.' '.$listMethod,"class"),
-            self::returnValue($listSrc,"href"),];//asignamos el valor que substituirá a las palabras claves en otro array
-            //substituimos las palabras clave por sus valores y lo guardamos en el array $out[]
-            $out[]=str_replace($keys,$words,'<{type} {id_name} {class} {href} >{title}');
-            if (array_key_exists("include",$list)){
-              //Si existe la clave "include", hay dentro otro array por lo que llamamos recursivamente al método listExplorer
-              //para que nos devuelva un un array de strings            
-              $out=array_merge($out,self::listExplorer($list["include"],$toClass));
-            }
-            $out[]='</'.$listType.'>'; 
-          }
-        }else
-        {
-          // Al no existir la clave "type" , vamos a comprobar si dentro hay más arrays.
-          $arrs=array_filter($list,'is_array');//Filtra elementos de un array usando una función 'is_array',
-          //Devolverá un array con tantos 'true' como arrays haya dentro del array original 
-          if (count($arrs)==count($list))
-          {
-            //Determinamos que todos los elementos del array original son arrays
-            // Y pasaremos a recorrer estos arrays para llamar de forma recursiva al método y pasarle los parámetros del array
-            foreach ($list as $value) {
-              //Añadimos al array $out el resultado de pasarle de forma recursiva el array al método
-              $out=array_merge($out,self::listExplorer($value,$toClass));
-          }
-          }else
-          {
-            //El Array recibido no es válido
-          };
-        }
-      } 
-      return $out;
-    }
+    
 
     /**
      * Genera el footer de la página.
@@ -388,19 +310,15 @@ class Basic extends HtmlTags{
                     <div class="col-lg-<?php echo ($div*$value["rel"])?> col-md-12 mb-4 mb-md-0">
                     <h5 class="text-uppercase"><?php echo $value["title"]?></h5>                  
                       <?php 
-                      if ($value["type"]==HtmlTags::CONTENT_FOOTER)
+                      if ($value["type"]==self::CONTENT_FOOTER)
                       {
                         echo ("<p>{$value["content"]}</p>");
-                      }elseif ($value["type"]==HtmlTags::LINK_FOOTER)
+                      }elseif ($value["type"]==self::LINK_FOOTER)
                       {
                         // Definimos las clases a añadir en función del tipo de elemento
-                        $toClass=[["type"=>HtmlTags::LIST_UNORDERED,"class"=>"list-unstyled mb-0"],
-                                  ["type"=>HtmlTags::HYPERLINK,"class"=>"text-dark"]];
-                        $list=SELF::listExplorer($value["include"],$toClass);
-                        foreach ($list as $value) {
-                          # code...
-                          echo $value;
-                        }
+                        $toClass=[["type"=>self::LIST_UNORDERED,"class"=>"list-unstyled mb-0"],
+                                  ["type"=>self::HYPERLINK,"class"=>"text-dark"]];
+                        self::listExplorerToHtml($value["include"],$toClass);
                       } ?>
                     </div>
                     <!--Grid column-->
@@ -436,78 +354,13 @@ class Basic extends HtmlTags{
     }
 
 
-    public static function warning(array $warning,array $options=NULL)
-    {
-      # $button=["id"=>'','title'=>'','class_button=>''];
-      # $warning=['id'=>'','title'=>'','body'=>['',''','',''],'buttons'=>[$button,$button]];
-      # $options=['class'=>'','position'=>''];
-      if (!empty($warning))
-      {
-        if (!empty($options) && $options!=NULL){
-          $top=(array_key_exists('position',$options))?(($options['position']=='top')?true:false):false;
-          $innerClass=(array_key_exists('class',$options))?$options['class']:'';
-
-  
-        }else
-        {
-          $top=false;
-          $innerClass='';
-
-        }
-        ?>
-        <div <?php echo (array_key_exists('id',$warning))?self::returnValue($warning['id'],'id'):''; ?> class="fixed-<?php echo ($top)?'top':'bottom'?> modal-dialog modal-xl <?php echo $innerClass;?>">
-          <div class="modal-content">
-                <div class="modal-header" style='border: none;'>
-                  <h5 class="modal-title"><?php echo (array_key_exists('title',$warning))?$warning['title']:''; ?></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" style='border: none;'>
-                <?php
-                  if (array_key_exists('body',$warning))
-                    {
-                      foreach ($warning['body'] as $value) 
-                      {
-                        # code...
-                        echo "<p>{$value}</p>";
-                      }
-                    }
-                ?>
-                </div>
-                <div class="modal-footer" style='border: none;'>
-                <?php
-                if (array_key_exists('buttons',$warning))
-                    {
-                      foreach ($warning['buttons'] as $value) 
-                      {
-                        # code...
-                        ?>
-                        <button type="button" <?php echo (array_key_exists('id',$value))?self::returnValue($value['id'],'id'):''; ?>  class="btn <?php echo (array_key_exists('class',$value))?$value['class']:''; ?>" data-bs-dismiss="modal">
-                        <?php echo (array_key_exists('title',$value))?$value['title']:''; ?></button>
-                       
-
-                        <button type="button" <?php echo (array_key_exists('id',$value)?self::returnValue($value['id'],'id'):'')?> 
-                        class="btn <?php echo (array_key_exists('class',$value)?$value['class_btn']:'btn-secondary')?>" 
-                        <?php echo (array_key_exists('type',$value)?(($value['type'==HtmlTags::BUTTON_CLOSE])?:'data-bs-dismiss="modal"'):'')?> 
-                        >
-                        <?php echo (array_key_exists('title',$value)?$value['title']:'')?></button>
-
-                        <?php
-                      }
-                    }
-                ?>
-                
-                </div>
-          </div>
-        </div>
-        <?php
-      } 
-    }
+    
 
 
     public static function linkModal(string $targetLink='',array $externalLink=NULL):string
     {
-       # $externalLink=['container_class'=>'','id'=>'','type'=>'','class'=>'','title'=>''];
-        # 'type' de $externalLink puede ser HtmlTags::HYPERLINK o HtmlTags::BUTTON
+       # $externalLink=['container_class'=>'','id'=>'','type'=>'','class'=>'','title'=>'' ];
+        # 'type' de $externalLink puede ser self::HYPERLINK o self::BUTTON
 
       $out='';
 
@@ -515,27 +368,27 @@ class Basic extends HtmlTags{
       {
         $containerClass= array_key_exists('container_class',$externalLink)?self::returnValue($externalLink['container_class'],'class'):'';
         $typeLink=array_key_exists('type',$externalLink)?
-        (($externalLink['type']==HtmlTags::HYPERLINK || $externalLink['type']==HtmlTags::BUTTON)?$externalLink['type']:HtmlTags::BUTTON):HtmlTags::BUTTON;
+        (($externalLink['type']==self::HYPERLINK || $externalLink['type']==self::BUTTON)?$externalLink['type']:self::BUTTON):self::BUTTON;
         $linkTitle=array_key_exists('title',$externalLink)?$externalLink['title']:'';
         $linkClass=array_key_exists('class',$externalLink)?$externalLink['class']:'';
         $linkId=array_key_exists('id',$externalLink)?self::returnValue($externalLink['id'],'id'):'';
       }else
       {
         $containerClass='';
-        $typeLink=HtmlTags::BUTTON;
+        $typeLink=self::BUTTON;
         $linkTitle="Modal {$targetLink}";
         $linkClass="btn-primary";
         $linkId='';
       }
       $out="<div {$containerClass}>".PHP_EOL;
-      $out.= '<'.$typeLink.' '.$linkId.' '.(($typeLink==HtmlTags::BUTTON)?'type="button"':'').(self::returnValue((($typeLink==HtmlTags::BUTTON)?'btn ':'').$linkClass,'class')).
+      $out.= '<'.$typeLink.' '.$linkId.' '.(($typeLink==self::BUTTON)?'type="button"':'').(self::returnValue((($typeLink==self::BUTTON)?'btn ':'').$linkClass,'class')).
       ' data-bs-toggle="modal" data-bs-target="#'.$targetLink.'" >'.$linkTitle.'</'.$typeLink.'>'.PHP_EOL;
       $out.="</div>".PHP_EOL;
       /*
       ?>
         <div <?php echo $containerClass?>>
         <?php
-          echo '<'.$typeLink.' '.$linkId.' '.(($typeLink==HtmlTags::BUTTON)?'type="button"':'').(self::returnValue((($typeLink==HtmlTags::BUTTON)?'btn ':'').$linkClass,'class')).
+          echo '<'.$typeLink.' '.$linkId.' '.(($typeLink==self::BUTTON)?'type="button"':'').(self::returnValue((($typeLink==self::BUTTON)?'btn ':'').$linkClass,'class')).
           ' data-bs-toggle="modal" data-bs-target="#'.$targetLink.'" >'.$linkTitle.'</'.$typeLink.'>';
         ?>
         </div>
@@ -545,22 +398,49 @@ class Basic extends HtmlTags{
     }
     
     public static function makeModal(array $modal=NULL, array $externalLink=NULL){
-      # $modal=['id'=>'','title'=>'','class'=>'','body'=>['','','',''],buttons=>[[type=>'close',class_btn=>'btn-secondary',id=>'',title=>'Close']]]
+      # $modal=['id'=>'','title'=>'','class'=>'','align'=>'','body'=>['','','',''],buttons=>[[type=>'close',class_btn=>'btn-secondary',id=>'',title=>'Close']]]
       # $externalLink=['container_class'=>'','id'=>'','type'=>'','class'=>'','title'=>''];
-      # 'type' de $externalLink puede ser HtmlTags::HYPERLINK o HtmlTags::BUTTON
+      # 'type' de $externalLink puede ser self::HYPERLINK o self::BUTTON
+      
+
       if (!empty($modal) && $modal!=NULL)
       {
       $id=array_key_exists('id',$modal)?$modal['id']:((array_key_exists('title',$modal))?$modal['title'].'ModalCenteredScrollable':'ModalCenteredScrollable');
       $idAriaLabelledBy=$id.'title';
+      $classModalDialog='';
+        $classModalInnerContent='';
+      if (array_key_exists('class',$modal))
+      {
+        $classes=explode(' ',$modal['class']);
+        
+        foreach ($classes as $clas) {
+          # code...
+          if ($clas==self::STYLE_NO_BORDER)
+          {
+            $classModalInnerContent.=' '.$clas;
+          }else
+          {
+            $classModalDialog.=' '.$clas;
+          }
+        }
+        $classModalInnerContent=trim($classModalInnerContent);
+        $classModalDialog.=(strpos($classModalDialog,self::STYLE_MODAL_DIALOG_CENTERED)!==false || 
+                            strpos($classModalDialog,self::STYLE_MODAL_DIALOG_START)!==false || 
+                            strpos($classModalDialog,self::STYLE_MODAL_DIALOG_END)!==false)?'':' '.self::STYLE_MODAL_DIALOG_CENTERED;
+        $classModalDialog=trim($classModalDialog);
+      }else
+      {
+        $classModalDialog=self::STYLE_MODAL_DIALOG_CENTERED;
+      }
       ?>
-      <div class="modal fade " id="<?php echo $id?>" tabindex="-1" aria-labelledby="<?php echo $idAriaLabelledBy?>" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable <?php echo (array_key_exists('class',$modal)?$modal['class']:'')?>">
+      <div class="modal fade" id="<?php echo $id?>" tabindex="-1" aria-labelledby="<?php echo $idAriaLabelledBy?>" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable <?php echo $classModalDialog?>" >
           <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header <?php echo $classModalInnerContent?>">
               <h5 class="modal-title" id="<?php echo $idAriaLabelledBy?>"><?php echo (array_key_exists('title',$modal)?$modal['title']:'')?></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body <?php echo $classModalInnerContent?>">
               <?php
                 if (array_key_exists('body',$modal))
                 {
@@ -571,22 +451,15 @@ class Basic extends HtmlTags{
                 }
               ?>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer <?php echo $classModalInnerContent?>">
               <?php if (array_key_exists('buttons',$modal))
               {
                 foreach ($modal['buttons'] as $button) 
                 {
                   # code...
                   # Buscamos dentro del array buttons y vamos imprimiendo los buttons que existan
-                  # en el caso que el button sea del tipo BUTTON_CLOSE añadimos "data-bs-dismiss="modal"
                   # si no hay especificado la clase del button sera del tipo btn-secondary
-                ?>
-                <button type="button" <?php echo (array_key_exists('id',$button)?self::returnValue($button['id'],'id'):'')?> 
-                class="btn <?php echo (array_key_exists('class_btn',$button)?$button['class_btn']:'btn-secondary')?>" 
-                <?php echo (array_key_exists('type',$button)?(($button['type'==HtmlTags::BUTTON_CLOSE])?:'data-bs-dismiss="modal"'):'')?> 
-                >
-                <?php echo (array_key_exists('title',$button)?$button['title']:'')?></button>
-              <?php
+                  self::buttonToHtml($button,'btn-secondary');
                 }
               }
               ?>
@@ -595,7 +468,10 @@ class Basic extends HtmlTags{
         </div>
       </div>
       <?php
-      echo self::linkModal($id,$externalLink);
+      if (!empty($externalLink) && $externalLink!=NULL)
+      {
+        echo self::linkModal($id,$externalLink);
+      }    
       }
     }
 
@@ -736,30 +612,25 @@ class Basic extends HtmlTags{
                   # code...
                   if (array_key_exists("type",$value))
                   {
-                    if ($value["type"]==HtmlTags::TITLE)
+                    if ($value["type"]==self::TITLE)
                     {?>
                       <h5 class="card-title"><?php echo (array_key_exists("content",$value)?$value["content"]:'')?></h5>
                     <?php
-                    }elseif ($value["type"]==HtmlTags::TEXT)
+                    }elseif ($value["type"]==self::TEXT)
                     {?>
                       <p class="card-text"><?php echo (array_key_exists("content",$value)?$value["content"]:'')?></p>
                     <?php
-                    }elseif ($value["type"]==HtmlTags::SMALL_TEXT){
+                    }elseif ($value["type"]==self::SMALL_TEXT){
                     ?>
                       <p class="card-text"><small class="text-muted"><?php echo (array_key_exists("content",$value)?$value["content"]:'')?></small></p>
                     <?php
-                    }elseif ($value["type"]==HtmlTags::LIST_UNORDERED || $value["type"]==HtmlTags::LIST_ARTICLE|| $value["type"]==HtmlTags::HYPERLINK)
+                    }elseif ($value["type"]==self::LIST_UNORDERED || $value["type"]==self::LIST_ARTICLE|| $value["type"]==self::HYPERLINK)
                     {
                       // Definimos las clases a añadir en función del tipo de elemento
-                      $toClass=[["type"=>HtmlTags::LIST_UNORDERED,"class"=>"list-group"],
-                      ["type"=>HtmlTags::LIST_ARTICLE,"class"=>"list-group-item"],
-                       ["type"=>HtmlTags::HYPERLINK,"class"=>"card-link","classbtn"=>"btn btn-primary"]];
-                        $list=SELF::listExplorer($value,$toClass);
-                        foreach ($list as $value)     
-                      {
-                          # code...
-                          echo $value;
-                      }                      
+                      $toClass=[["type"=>self::LIST_UNORDERED,"class"=>"list-group"],
+                      ["type"=>self::LIST_ARTICLE,"class"=>"list-group-item"],
+                       ["type"=>self::HYPERLINK,"class"=>"card-link","classbtn"=>"btn btn-primary"]];
+                        self::listExplorerToHtml($value,$toClass);                    
                     }
                   }  
                 }
