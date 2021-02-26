@@ -4,6 +4,7 @@
 		<?php
 		(TEMPLATE)::head(HEAD_CONTENT,FAVICONS,LINKS_HEAD,EXTERNAL_JAVA_SCRIPTS,FACEBOOKOPENGRAPH,TWITTER_CARD);
 		?>
+  
 	</head>
 	<body>
       <?php
@@ -33,6 +34,8 @@
 	
 
       ?>
+
+
 	  
   </body>
 	

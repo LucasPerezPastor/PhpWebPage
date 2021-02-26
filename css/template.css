@@ -17,6 +17,10 @@
     border: none;
 }
 
+.no-background{
+    background: 0 0;
+}
+
 @media (min-width: 576px) 
 {     
     .modal-dialog-start, .modal-dialog-end 
