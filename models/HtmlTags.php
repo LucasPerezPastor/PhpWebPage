@@ -273,4 +273,66 @@ class HtmlTags{
             echo $value;
           }
     }
+
+    /**
+     * Devuelve un string con la estructura html de una imagen.
+     * La variable $img puede ser un string, un array asociativo o un objeto
+     * En el caso de ser un string se interpreta que el valor del string es la ruta de la imagen.
+     * En el caso de array asociativo se buscan las claves [src,id,class,alt,width,height,link]
+     * En el caso de ser un objeto se buscan las propiedades ->src,->id,->class,->alt,->width,->heigth,->link
+     * En el caso de existir una clave link o una propiedas link la imagen <img> se  envuelve dentro de tag <a>
+     * y se le añaden saltos de linea PHP_EOL entre ellos.
+     *
+     * @param $img
+     * @return string
+     */
+    static function img(&$img):string
+    {
+      $out='';
+      $varType=getType($img);
+      if (($varType=="array" || $varType=="string" || $varType=="object") && (!empty($img)))
+      {
+        if ($varType=="string")
+        {
+          $out='<img src="'.$img.'">';
+        }else
+        {
+          if ($varType=="array")
+          {
+            $src=(array_key_exists('src',$img))?self::returnValue($img['src'],'src'):'';
+            $id=(array_key_exists('id',$img))?self::returnValue($img['id'],'id'):'';
+            $alt=(array_key_exists('alt',$img))?self::returnValue($img['alt'],'alt'):'';
+            $width=(array_key_exists('width',$img))?self::returnValue($img['width'],'width'):'';
+            $height=(array_key_exists('height',$img))?self::returnValue($img['height'],'height'):'';
+            $class=(array_key_exists('class',$img))?self::returnValue($img['class'],'class'):'';
+            $toLink=(array_key_exists('link',$img))?self::returnValue($img['link'],'href'):'';
+          }else
+          {
+            $src=(property_exists($img,'src'))?self::returnValue($img->src,'src'):'';
+            $id=(property_exists($img,'id'))?self::returnValue($img->id,'id'):'';
+            $alt=(property_exists($img,'alt'))?self::returnValue($img->alt,'alt'):'';
+            $width=(property_exists($img,'width'))?self::returnValue($img->width,'width'):'';
+            $height=(property_exists($img,'height'))?self::returnValue($img->height,'height'):'';
+            $class=(property_exists($img,'class'))?self::returnValue($img->class,'class'):'';
+            $toLink=(property_exists($img,'link'))?self::returnValue($img->link,'href'):'';
+          }
+          $out=$id.' '.$class.' '.$src.' '.$alt.' '.$width.' '.$height;
+          $out='<img '.trim($out).'>';
+          $out=(empty($toLink))?$out:'<a '.$toLink.'>'.PHP_EOL.$out.PHP_EOL.'</a>';
+        }
+      }
+      return $out;
+    }
+
+    /**
+     * Imprime el codigo html generado por el método "img"
+     *
+     * @param $img
+     * @return void
+     */
+    static function imgToHtml(&$img)
+    {
+      $out=self::img($img);
+      if (!empty($out)){echo $out;}
+    }
 }

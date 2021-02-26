@@ -226,7 +226,7 @@ class Basic extends HtmlTags{
      * @param array $search
      * @return void
      */
-    public static function nav(array $navBar=NULL,string $title='',string $href="#",array $logo=NULL,array $search=NULL){
+    public static function nav(array $navBar=NULL,string $title='',string $href="#",$logo=NULL,array $search=NULL){
       ?>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
           <div class="container-fluid">
@@ -234,16 +234,7 @@ class Basic extends HtmlTags{
               <?php
               if (!empty($logo))
               {
-               
-                if (array_key_exists("src",$logo) && !empty($logo["src"]))
-                {
-                  ?>
-                  <img src="<?php echo $logo["src"]?>" 
-                  alt="<?php echo (array_key_exists("alt",$logo)?$logo["alt"]:'')?>" 
-                  width="<?php echo (array_key_exists("width",$logo)?$logo["width"]:'')?>" 
-                  height="<?php echo (array_key_exists("height",$logo)?$logo["height"]:'')?>" class="d-inline-block align-top">
-                  <?php
-                }               
+               self::imgToHtml($logo);            
               }
               echo $title;
               ?>
@@ -338,9 +329,9 @@ class Basic extends HtmlTags{
                 <?php echo (array_key_exists('copyright',$informationFooter)?$informationFooter['copyright']:'')?>
               </div>
               <div class="col-lg-6 col-md-8 col-sm-12 text-center">
-              <?php echo (array_key_exists('legaladvice',$informationFooter)?$informationFooter['copyright']:'')?>
-              <?php echo (array_key_exists('privacypolicy',$informationFooter)?$informationFooter['copyright']:'')?>
-              <?php echo (array_key_exists('cookiespolicy',$informationFooter)?$informationFooter['copyright']:'')?>
+              <?php echo (array_key_exists('legala_dvice',$informationFooter)?$informationFooter['legal_advice']:'')?>
+              <?php echo (array_key_exists('privacy_policy',$informationFooter)?$informationFooter['privacy_policy']:'')?>
+              <?php echo (array_key_exists('cookies_policy',$informationFooter)?$informationFooter['cookies_policy']:'')?>
               </div>
             
           </div>
@@ -384,16 +375,6 @@ class Basic extends HtmlTags{
       $out.= '<'.$typeLink.' '.$linkId.' '.(($typeLink==self::BUTTON)?'type="button"':'').(self::returnValue((($typeLink==self::BUTTON)?'btn ':'').$linkClass,'class')).
       ' data-bs-toggle="modal" data-bs-target="#'.$targetLink.'" >'.$linkTitle.'</'.$typeLink.'>'.PHP_EOL;
       $out.="</div>".PHP_EOL;
-      /*
-      ?>
-        <div <?php echo $containerClass?>>
-        <?php
-          echo '<'.$typeLink.' '.$linkId.' '.(($typeLink==self::BUTTON)?'type="button"':'').(self::returnValue((($typeLink==self::BUTTON)?'btn ':'').$linkClass,'class')).
-          ' data-bs-toggle="modal" data-bs-target="#'.$targetLink.'" >'.$linkTitle.'</'.$typeLink.'>';
-        ?>
-        </div>
-        <?php
-        */
         return $out;
     }
     
@@ -479,7 +460,7 @@ class Basic extends HtmlTags{
 
 
     /**
-     * Genera un carousel de imágenes con texto. Las imáagenes con titulo y descripción vienen dadas por el 
+     * Genera un carousel de imágenes con texto. Las imágenes con titulo y descripción vienen dadas por el 
      * array $data Carousel. La variable booleana $controls indica si queremos que que salgan las flechas de 
      * "prev" y "next". La variable $indicators indica si queremos que salgan unos indicadores sobre la página
      * la el contenido que estamos.
