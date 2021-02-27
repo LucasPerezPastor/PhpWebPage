@@ -10,17 +10,18 @@
 //***VARIABLES PARA EL HEAD DE LA PAGINA WEB */
 
 //"width" y "height" de la variable $viewPort tienen valores contenidos en la clase HtmlTags(VIEWPORT_DEVICE_WITDH Y VIEWPORT_DEVICE_HEIGHT)
-define("HEAD_CONTENT",["charset"=>'utf-8',"author"=>'Author',"description"=>'Description',"title"=>'Title',
-"viewport"=>["width"=>HtmlTags::VIEWPORT_DEVICE_WIDTH,"heigth"=>'',"initialScale"=>0,"minimunScale"=>0,"maximumScale"=>0,"userScalable"=>'']]);
+/*define("HEAD_CONTENT",[HtmlTags::META_CHARSET=>'utf-8',"author"=>'Author',"description"=>'Description',"title"=>'Title',
+"viewport"=>[HtmlTags::WIDTH=>HtmlTags::VIEWPORT_DEVICE_WIDTH,HtmlTags::HEIGHT=>'',"initialScale"=>0,"minimunScale"=>0,"maximumScale"=>0,"userScalable"=>'']]);*/
+$headContent=[HtmlTags::META_CHARSET=>'utf-8',"author"=>'Author',"description"=>'Description',"title"=>'Title',
+"viewport"=>[HtmlTags::WIDTH=>HtmlTags::VIEWPORT_DEVICE_WIDTH,HtmlTags::HEIGHT=>'',"initialScale"=>0,"minimunScale"=>0,"maximumScale"=>0,"userScalable"=>'']];
 
-
-$favicon=[];
+$favicons=[];
 // "rel" de la variable $icon tienen valores contenidos en la clase HtmlTags (ICON_REL_BASIC,ICON_REL_BASIC_OLD,ICON_REL_APPLE)
 
-$favicon[]=["rel"=>HtmlTags::ICON_REL_BASIC,"src"=>'#', "width"=>100,"heigth"=>100];;//ir añadiendo iconos al array
-$favicon[]=["rel"=>HtmlTags::ICON_REL_APPLE,"src"=>'#', "width"=>100,"heigth"=>100];;//ir añadiendo iconos al array
+$favicons[]=["rel"=>HtmlTags::ICON_REL_BASIC,"src"=>'#', HtmlTags::WIDTH=>100,HtmlTags::HEIGHT=>100];;//ir añadiendo iconos al array
+$favicons[]=["rel"=>HtmlTags::ICON_REL_APPLE,"src"=>'#', HtmlTags::WIDTH=>100,HtmlTags::HEIGHT=>100];;//ir añadiendo iconos al array
 
-define("FAVICONS",$favicon);
+//define("FAVICONS",$favicon);
 
 //"rel" de la variable $link tienen valores contenidos en la clase HtmlTags
 //( LINK_STYLESHEET,LINK_CANONICAL,LINK_AMPHTML,LINK_MANIFEST,LINK_AUTHOR,
@@ -29,15 +30,17 @@ define("FAVICONS",$favicon);
 //  LINK_MICROPUB,LINK_SEARCH,LINK_DNS_PREFETCH,LINK_PRECONNECT,LINK_PREFETCH
 //  LINK_PRERENDER,LINK_PRELOAD)
 
-$lnks=[];
-$links[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/bootstrap.min.css',"asto"=>'',"type"=>'',"title"=>''];;//Ir añadiendo links al array.
+$lnksHead=[];
+$linksHead[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/bootstrap.min.css',"asto"=>'',"type"=>'',"title"=>''];;//Ir añadiendo links al array.
 //$links[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css',"asto"=>'',"type"=>'',"title"=>''];
-$links[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/starter-template.css',"asto"=>'',"type"=>'',"title"=>''];;//Ir añadiendo links al array.
-$links[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/template.css',"asto"=>'',"type"=>'',"title"=>''];;//Ir añadiendo links al array.
+$linksHead[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/starter-template.css',"asto"=>'',"type"=>'',"title"=>''];;//Ir añadiendo links al array.
+$linksHead[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/template.css',"asto"=>'',"type"=>'',"title"=>''];;//Ir añadiendo links al array.
 
-define("LINKS_HEAD",$links);
+//define("LINKS_HEAD",$links);
 
-define ("EXTERNAL_JAVA_SCRIPTS",["js/jquery-3.5.1.min.js","js/bootstrap.min.js"]);
+
+$extrernalJavaScript=["js/jquery-3.5.1.min.js","js/bootstrap.min.js"];
+//define ("EXTERNAL_JAVA_SCRIPTS",["js/jquery-3.5.1.min.js","js/bootstrap.min.js"]);
 //define ("EXTERNAL_JAVA_SCRIPTS",["https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js","https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"]);
 
 
@@ -46,7 +49,9 @@ define ("EXTERNAL_JAVA_SCRIPTS",["js/jquery-3.5.1.min.js","js/bootstrap.min.js"]
 //FaceBook
 $contenido=["title"=>'Title',"description"=>'Description',"url"=>'#',"author"=>'Author'];
 $img=["src"=>'#',"alt"=>'Alt'];
-define("FACEBOOKOPENGRAPH",["content"=>$contenido,"img"=>$img,"appid"=>'',"type"=>'',"sitename"=>'',"locale"=>'']);
+$faceBookOpenGraph=["content"=>$contenido,HtmlTags::IMG=>$img,"appid"=>'',"type"=>'',"sitename"=>'',"locale"=>''];
+
+//define("FACEBOOKOPENGRAPH",["content"=>$contenido,HtmlTags::IMG=>$img,"appid"=>'',"type"=>'',"sitename"=>'',"locale"=>'']);
 
 
 //Twitter
@@ -54,7 +59,9 @@ define("FACEBOOKOPENGRAPH",["content"=>$contenido,"img"=>$img,"appid"=>'',"type"
 //Se pueden usar los arrays $contenido y $img de Social Media de Facebook.
 //$contenido=["title"=>'',"description"=>'',"url"=>'',"author"=>''];
 //$img=["src"=>'',"alt"=>''];
-define('TWITTER_CARD',["content"=>$contenido,"img"=>$img,"card"=>'',"site"=>'']);
+$twitterCard=["content"=>$contenido,HtmlTags::IMG=>$img,"card"=>'',"site"=>''];
+
+//define('TWITTER_CARD',["content"=>$contenido,HtmlTags::IMG=>$img,"card"=>'',"site"=>'']);
 
 //** VARIABLES PARA EL NAV DE LA PAGINA WEB */
 
@@ -68,59 +75,40 @@ define('TWITTER_CARD',["content"=>$contenido,"img"=>$img,"card"=>'',"site"=>''])
 
 
 
-$item1=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>HtmlTags::LIST_ACTIVE,"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>'',"title"=>'',"src"=>'']];
-$item2=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>'',"title"=>'',"src"=>'']];
-$item3=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>HtmlTags::HYPERLINK_DISABLED,"title"=>'',"src"=>'']];
-$subMenu4=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>
-            [["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>'',"title"=>'',"src"=>'']],
-            ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>'',"title"=>'',"src"=>'']],
-            ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>'',"title"=>'',"src"=>'']],
+$item1=["type"=>HtmlTags::LIST_ARTICLE,HtmlTags::ID=>'',"method"=>HtmlTags::LIST_ACTIVE,"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,HtmlTags::ID=>'',"method"=>'',"title"=>'',"src"=>'']];
+$item2=["type"=>HtmlTags::LIST_ARTICLE,HtmlTags::ID=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,HtmlTags::ID=>'',"method"=>'',"title"=>'',"src"=>'']];
+$item3=["type"=>HtmlTags::LIST_ARTICLE,HtmlTags::ID=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,HtmlTags::ID=>'',"method"=>HtmlTags::HYPERLINK_DISABLED,"title"=>'',"src"=>'']];
+$subMenu4=["type"=>HtmlTags::LIST_UNORDERED,HtmlTags::ID=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>
+            [["type"=>HtmlTags::LIST_ARTICLE,HtmlTags::ID=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,HtmlTags::ID=>'',"method"=>'',"title"=>'',"src"=>'']],
+            ["type"=>HtmlTags::LIST_ARTICLE,HtmlTags::ID=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,HtmlTags::ID=>'',"method"=>'',"title"=>'',"src"=>'']],
+            ["type"=>HtmlTags::LIST_ARTICLE,HtmlTags::ID=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>["type"=>HtmlTags::HYPERLINK,HtmlTags::ID=>'',"method"=>'',"title"=>'',"src"=>'']],
             ]];
-$item4=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'',"method"=>HtmlTags::LIST_DROPDOWN,"title"=>'',"src"=>'',"include"=>
-        [["type"=>HtmlTags::HYPERLINK,"id"=>'',"method"=>'',"title"=>'',"src"=>''],
+$item4=["type"=>HtmlTags::LIST_ARTICLE,HtmlTags::ID=>'',"method"=>HtmlTags::LIST_DROPDOWN,"title"=>'',"src"=>'',"include"=>
+        [["type"=>HtmlTags::HYPERLINK,HtmlTags::ID=>'',"method"=>'',"title"=>'',"src"=>''],
         $subMenu4]];
 
-$nav=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>[
+$navBar=["type"=>HtmlTags::LIST_UNORDERED,HtmlTags::ID=>'',"method"=>'',"title"=>'',"src"=>'',"include"=>[
         $item1,$item2,$item3,$item4]];
 
 
-$item1=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item1',"method"=>HtmlTags::LIST_ACTIVE,"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item1',"title"=>'Hyperlink',"src"=>'#']];
-$item2=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item2',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item2',"title"=>'Hyperlink',"src"=>'#']];
-$item3=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item3',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item3',"method"=>HtmlTags::HYPERLINK_DISABLED,"title"=>'Hyperlink',"src"=>'#']];
-$subMenu4=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem4',"include"=>
-                [["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item1',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item1',"title"=>'Hyperlink',"src"=>'#']],
-                ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item2',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item2',"title"=>'Hyperlink',"src"=>'#']],
-                ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item2',"include"=>["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item2',"title"=>'Hyperlink',"src"=>'#']],
-                ]];
-$item4=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item4',"method"=>HtmlTags::LIST_DROPDOWN,"include"=>
-        [["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinkitem4',"title"=>'Hyperlink',"src"=>'#'],
-        $subMenu4]];
 
-$subMenu5=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"include"=>
-        [["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#']],
-        ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#']],
-        ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#']],
-        ]];
-$item5=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item5',"method"=>HtmlTags::LIST_DROPDOWN,"include"=>
-[["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinkitem5',"title"=>'Hyperlink',"src"=>'#'],
-$subMenu5]];
-
-$nav=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'menu',"method"=>'',"title"=>'',"src"=>'',"include"=>[
-        $item1,$item2,$item3,$item4,$item5]];
-
-define('NAVBAR',$nav);
+//define('NAVBAR',$navBar);
 
 
 //Logo de la página
 
-define('LOGO',["src"=>"img/logo.jpg","alt"=>"Logo","width"=>100,"height"=>24]);
+$logo=["src"=>"img/logo.jpg","alt"=>"Logo",HtmlTags::WIDTH=>100,HtmlTags::HEIGHT=>24];
+
+//define('LOGO',["src"=>"img/logo.jpg","alt"=>"Logo",HtmlTags::WIDTH=>100,HtmlTags::HEIGHT=>24]);
 
 //Formulario de búqueda
 
-define('SEARCH_FORM',["name"=>"busqueda","placeholder"=>"Búsqueda","method"=>"POST","action"=>"#"]);
+$searchForm=["name"=>"busqueda","placeholder"=>"Búsqueda","method"=>"POST","action"=>"#"];
+
+//define('SEARCH_FORM',["name"=>"busqueda","placeholder"=>"Búsqueda","method"=>"POST","action"=>"#"]);
 
 //Idioma de la página
-$language='es';
+$language='esp';
 
 
 //Contenido del footer
@@ -141,7 +129,7 @@ $contentFooter=["type"=>HtmlTags::CONTENT_FOOTER,"title"=>"CONTENT FOOTER","cont
 molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
 voluptatem veniam, est atque cumque eum delectus sint!","rel"=>2];
 
-$listLink1=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"include"=>
+$listLink1=["type"=>HtmlTags::LIST_UNORDERED,HtmlTags::ID=>'submenuitem5',"include"=>
         [["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link1"]],
         ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link2"]],
         ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link3"]],
@@ -149,7 +137,7 @@ $listLink1=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"include"=>
 
 $link1=["type"=>HtmlTags::LINK_FOOTER,"title"=>"LINK1","rel"=>1,"include"=>$listLink1];
 
-$listLink2=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"include"=>
+$listLink2=["type"=>HtmlTags::LIST_UNORDERED,HtmlTags::ID=>'submenuitem5',"include"=>
         [["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link1"]],
         ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link2"]],
         ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link3"]],
@@ -157,7 +145,9 @@ $listLink2=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"include"=>
 
 $link2=["type"=>HtmlTags::LINK_FOOTER,"title"=>"LINK1","rel"=>3,"include"=>$listLink1];
 
-define('FOOTER',[$contentFooter,$link1,$link2]);
+$footer=[$contentFooter,$link1,$link2];
+
+//define('FOOTER',[$contentFooter,$link1,$link2]);
 
 
 //Datos para el Carousel
@@ -174,7 +164,9 @@ $carousel2=["img_src"=>"#","img_alt"=>"text alternative","title"=>"Lorem ipsum d
 $carousel3=["img_src"=>"#","img_alt"=>"text alternative","title"=>"Lorem ipsum dolor sit amet consectetur","content"=>"Lorem ipsum dolor sit amet consectetur, adipisicing elit."];
 $carousel4=["img_src"=>"#","img_alt"=>"text alternative","title"=>"Lorem ipsum dolor sit amet consectetur","content"=>"Lorem ipsum dolor sit amet consectetur, adipisicing elit."];
 
-define("CAROUSEL",[$carousel1,$carousel2,$carousel3,$carousel4]);
+$carousel=[$carousel1,$carousel2,$carousel3,$carousel4];
+
+//define("CAROUSEL",[$carousel1,$carousel2,$carousel3,$carousel4]);
 
 
 //Datos de las tarjetas (Card)
@@ -183,24 +175,28 @@ define("CAROUSEL",[$carousel1,$carousel2,$carousel3,$carousel4]);
 //Las tarjetas son un array de dos arrays [img,body] y body puede ser un array multidimensional y el orden de muestra 
 //va en función del orden del array.
 
-$img=["src"=>"...","alt"=>"...","width"=>100,"heigth"=>100];
+$img=["src"=>"...","alt"=>"...",HtmlTags::WIDTH=>100,HtmlTags::HEIGHT=>100];
 $firstTitle=["type"=>HtmlTags::TITLE,"content"=>"Lore ipsum dolor sit amet"];
 $secondTitle=["type"=>HtmlTags::TITLE,"content"=>"Lore ipsum dolor sit amert"];
 $firstText=["type"=>HtmlTags::TEXT,"content"=>"Lore ipsum dolor sit amet consectetur"];
-$listLink=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"include"=>
+$listLink=["type"=>HtmlTags::LIST_UNORDERED,HtmlTags::ID=>'submenuitem5',"include"=>
         [["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link1","btn"=>true]],
         ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link2"]],
         ["type"=>HtmlTags::LIST_ARTICLE,"include"=>["type"=>HtmlTags::HYPERLINK,"src"=>'#',"title"=>"Link3"]],
         ]];
 $body=[$firstTitle,$firstText,$secondTitle,$listLink];
 
-define("CARD_PRESENT",["img"=>$img,"body"=>$body]);
+$cardPresent=[HtmlTags::IMG=>$img,"body"=>$body];
+
+//define("CARD_PRESENT",[HtmlTags::IMG=>$img,"body"=>$body]);
 
 
 //Grupo de tarjetas 
 //Es un array multidimensional con arrays de tarjetas dentro
 
-define ("CARD_GROUP",[CARD_PRESENT,CARD_PRESENT,CARD_PRESENT,CARD_PRESENT,CARD_PRESENT]);
+$cardGroup=[$cardPresent,$cardPresent,$cardPresent,$cardPresent];
+
+//define ("CARD_GROUP",[CARD_PRESENT,CARD_PRESENT,CARD_PRESENT,CARD_PRESENT,CARD_PRESENT]);
 
 
 

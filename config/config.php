@@ -3,7 +3,7 @@
 
 //lista de directorios donde debe buscar el Autoload
 
-$classmap=['controllers','models','libraries','templates'];
+$classmap=['controllers','models','libraries','templates','lang'];
 
 
 //PARAMETROS DE CONFIGURACION DE LA BDD

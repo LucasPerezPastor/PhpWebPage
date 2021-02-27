@@ -24,7 +24,7 @@ class Basic extends HtmlTags{
     public static function head(array $headContent=NULL,array $favicons=NULL,array $links=NULL,array $javaScripts=NULL,array $faceBookOpenGraph=NULL,array $twitterCard=NULL)
     {
       if (!is_null($headContent)){
-        echo self::meta('charset',$headContent["charset"]).PHP_EOL;
+        echo self::meta(self::META_CHARSET,$headContent[self::META_CHARSET]).PHP_EOL;
         echo self::viewPort($headContent["viewport"]).PHP_EOL;
         echo self::title($headContent["title"]).PHP_EOL;
         echo self::meta('author',$headContent["author"],'name').PHP_EOL;
@@ -32,7 +32,7 @@ class Basic extends HtmlTags{
       };
       if (!is_null($favicons)){
         foreach ($favicons as $value) {
-          echo self::icon($value["rel"],$value["src"],$value["width"],$value["heigth"]).PHP_EOL;
+          echo self::icon($value["rel"],$value["src"],$value[self::WIDTH],$value[self::HEIGHT]).PHP_EOL;
         }
       };
       if (!is_null($links)){
@@ -53,8 +53,8 @@ class Basic extends HtmlTags{
         echo self::meta($og.'description',$faceBookOpenGraph["content"]["description"],$prop).PHP_EOL;
         echo self::meta('article:author',$faceBookOpenGraph["content"]["author"],$prop).PHP_EOL;
         echo self::meta($og.'url',$faceBookOpenGraph["content"]["url"],$prop).PHP_EOL;
-        echo self::meta($og.'image',$faceBookOpenGraph["img"]["src"],$prop).PHP_EOL;
-        echo self::meta($og.'image:alt',$faceBookOpenGraph["img"]["alt"],$prop).PHP_EOL;    
+        echo self::meta($og.'image',$faceBookOpenGraph[self::IMG]["src"],$prop).PHP_EOL;
+        echo self::meta($og.'image:alt',$faceBookOpenGraph[self::IMG]["alt"],$prop).PHP_EOL;    
         echo self::meta($og.'type',$faceBookOpenGraph["type"],$prop).PHP_EOL;
         echo self::meta($og.'site_name',$faceBookOpenGraph["sitename"],$prop).PHP_EOL;
         echo self::meta($og.'locale',$faceBookOpenGraph["locale"],$prop).PHP_EOL;
@@ -67,8 +67,8 @@ class Basic extends HtmlTags{
         echo self::meta($twit.'description',$twitterCard["content"]["description"],$prop).PHP_EOL;
         echo self::meta($twit.'creator',$twitterCard["content"]["author"],$prop).PHP_EOL;
         echo self::meta($twit.'url',$twitterCard["content"]["url"],$prop).PHP_EOL;
-        echo self::meta($twit.'image',$twitterCard["img"]["src"],$prop).PHP_EOL;
-        echo self::meta($twit.'image:alt',$twitterCard["img"]["alt"],$prop).PHP_EOL;    
+        echo self::meta($twit.'image',$twitterCard[self::IMG]["src"],$prop).PHP_EOL;
+        echo self::meta($twit.'image:alt',$twitterCard[self::IMG]["alt"],$prop).PHP_EOL;    
         echo self::meta($twit.'card',$twitterCard["card"],$prop).PHP_EOL;
         echo self::meta($twit.'site',$twitterCard["site"],$prop).PHP_EOL;
       };
@@ -132,7 +132,7 @@ class Basic extends HtmlTags{
           //Si el array NavBar  no tiene alguna de las claves=>valor las pone en valor vacio.
           $navType=$navBar["type"];
           $navMethod=(array_key_exists("method",$navBar))?$navBar["method"]:'';
-          $navId=(array_key_exists("id",$navBar))?$navBar["id"]:'';
+          $navId=(array_key_exists(self::ID,$navBar))?$navBar[self::ID]:'';
           $navTitle=(array_key_exists("title",$navBar))?$navBar["title"]:'';
           $navSrc=(array_key_exists("src",$navBar))?$navBar["src"]:'';
 
@@ -182,7 +182,7 @@ class Basic extends HtmlTags{
               $innerDataBSToggle=$dataBSToggle; 
             }
           }
-          $words=[$navType,self::returnValue($navId,"id"),
+          $words=[$navType,self::returnValue($navId,self::ID),
               $navTitle,self::returnValue($innerClass.' '.$navMethod,"class"),
               self::returnValue($navSrc,"href"),self::returnValue($labelledBy,"aria-labelledby"),
               self::returnValue($innerDataBSToggle,"data-bs-toggle"),self::returnValue($innerAriaExpanded,"aria-expanded"),
@@ -206,7 +206,7 @@ class Basic extends HtmlTags{
             foreach ($navBar as $value) {
               //Añadimos al array $out el resultado de pasarle de forma recursiva el array al método
               $out=array_merge($out,self::navBarExplorer($value,$class,$dropdown,$id,$dataBSToggle,$ariaExpanded,$ariaCurrent));
-              $id=isset($value["id"])?$value["id"]:'';
+              $id=isset($value[self::ID])?$value[self::ID]:'';
             }
           }else
           {
@@ -329,7 +329,7 @@ class Basic extends HtmlTags{
                 <?php echo (array_key_exists('copyright',$informationFooter)?$informationFooter['copyright']:'')?>
               </div>
               <div class="col-lg-6 col-md-8 col-sm-12 text-center">
-              <?php echo (array_key_exists('legala_dvice',$informationFooter)?$informationFooter['legal_advice']:'')?>
+              <?php echo (array_key_exists('legal_advice',$informationFooter)?$informationFooter['legal_advice']:'')?>
               <?php echo (array_key_exists('privacy_policy',$informationFooter)?$informationFooter['privacy_policy']:'')?>
               <?php echo (array_key_exists('cookies_policy',$informationFooter)?$informationFooter['cookies_policy']:'')?>
               </div>
@@ -362,7 +362,7 @@ class Basic extends HtmlTags{
         (($externalLink['type']==self::HYPERLINK || $externalLink['type']==self::BUTTON)?$externalLink['type']:self::BUTTON):self::BUTTON;
         $linkTitle=array_key_exists('title',$externalLink)?$externalLink['title']:'';
         $linkClass=array_key_exists('class',$externalLink)?$externalLink['class']:'';
-        $linkId=array_key_exists('id',$externalLink)?self::returnValue($externalLink['id'],'id'):'';
+        $linkId=array_key_exists(self::ID,$externalLink)?self::returnValue($externalLink[self::ID],self::ID):'';
       }else
       {
         $containerClass='';
@@ -386,7 +386,7 @@ class Basic extends HtmlTags{
 
       if (!empty($modal) && $modal!=NULL)
       {
-      $id=array_key_exists('id',$modal)?$modal['id']:((array_key_exists('title',$modal))?$modal['title'].'ModalCenteredScrollable':'ModalCenteredScrollable');
+      $id=array_key_exists(self::ID,$modal)?$modal[self::ID]:((array_key_exists('title',$modal))?$modal['title'].'ModalCenteredScrollable':'ModalCenteredScrollable');
       $idAriaLabelledBy=$id.'title';
       $classModalDialog='';
         $classModalInnerContent='';
@@ -568,12 +568,12 @@ class Basic extends HtmlTags{
         <div class="card">
       <?php
       }
-            if (array_key_exists("img",$card))
+            if (array_key_exists(self::IMG,$card))
             {
-              $src=(array_key_exists("src",$card["img"]))?$card["img"]["src"]:'';
-              $alt=(array_key_exists("alt",$card["img"]))?$card["img"]["alt"]:'';
-              $width=(array_key_exists("width",$card["img"]))?'width="'.$card["img"]["width"].'"':'';
-              $height=(array_key_exists("height",$card["img"]))?'height="'.$card["img"]["height"].'"':'';
+              $src=(array_key_exists("src",$card[self::IMG]))?$card[self::IMG]["src"]:'';
+              $alt=(array_key_exists("alt",$card[self::IMG]))?$card[self::IMG]["alt"]:'';
+              $width=(array_key_exists("width",$card[self::IMG]))?self::returnValue($card[self::IMG][self::WIDTH],self::WIDTH):'';
+              $height=(array_key_exists("height",$card[self::IMG]))?self::returnValue($card[self::IMG][self::HEIGHT],self::HEIGHT):'';
             ?>
               <img <?php echo $horizontal?'':'class="card-img-top"'?> src="<?php echo $src?>" alt="<?php echo $alt?>" <?php echo $width?> <?php echo $height?>>
             <?php
