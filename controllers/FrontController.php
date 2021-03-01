@@ -11,13 +11,14 @@ class Frontcontroller {
            
 
         try{
+            
             //GESTIÓN DE PETICIONES  
             //recuperar el controlador de la petición
             //si no llega el parámetro c , el conrtrolador es Welcome (config.php)
             //si llega c=libro, el controlador es LibroController
             
             $c=empty($_GET['c'])?DEFAULT_CONTROLLER:ucfirst($_GET['c']).'Controller'; //ucfirst pone en mayúcula la primera letra de la palabra
-            
+           
             //recuperar el método de la petición
             // si no llega el parámetro m, el métod es index (config.php)
             //si llega m=create, el método sería create()
@@ -27,7 +28,7 @@ class Frontcontroller {
             //recupera el parámetro de la petición
             
             $p=empty($_GET['p'])?false:$_GET['p'];
-            
+          
             
             //cargar el controlador correspondiente
             $controlador=new $c();
@@ -37,6 +38,8 @@ class Frontcontroller {
                     throw new Exception("No existe la operación $m");
             
             //llama al método del controlador , pasando el parámetro
+
+            
             
             $controlador->$m($p); //Ejemplo LibroController->create(5);
         } catch (Throwable $e){   //Throwable = para cualquier tipo de error o excepcion

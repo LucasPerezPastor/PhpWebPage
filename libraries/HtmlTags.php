@@ -78,18 +78,19 @@ class HtmlTags{
 
 
     /**
-     * Devuelve NUUL o un String con el código Html del Tag meta
+     * Devuelve un String con el código Html del Tag meta , siempre y cuando 
+     * $value y $clave no esten vacios sino devuelve un string vacio
      * Si la variable $clave es igual a META_CHARSET entonces crea el tag asignado el charset al valor establecido por $value.
      * En el caso contrario genera el tag usando $type=4clave y content=$value
      *
      * @param string $clave
      * @param string $value
      * @param string $type
-     * @return string|null
+     * @return string
      */
-    public static function meta(string $clave='',string $value='',string $type=''):?string{
+    public static function meta(string $clave='',string $value='',string $type=''):string{
         if (empty($value) || empty($clave)){
-            return NULL;
+            return '';
         } else {
             $out=($clave==self::META_CHARSET)?'<meta '.$clave.'="'.$value.'">':(empty($type)?NULL:'<meta '.$type.'="'.$clave.'" content="'.$value.'">');             
             return $out;
@@ -98,7 +99,9 @@ class HtmlTags{
     }
 
     /**
-     * Devuelve NULL o un string con el tag HTMl para la carga del favicon
+     * Devuelve un string con el tag HTMl para la carga del favicon,
+     * siempre y cuando $rel y $src no esten vacios y $width y $height tengan algún valor.
+     * Sino devuelve un string vacio.
      * <link rel="{$rel}" sizes="{$width}x{$heigth} href="{$src}">
      * 
      * $rel pueder ser:
@@ -112,9 +115,9 @@ class HtmlTags{
      * @return string|null
      */
 
-    public static function icon(string $rel='',string $src='',int $width=0, int $heigth=0):?string{
+    public static function icon(string $rel='',string $src='',int $width=0, int $heigth=0):string{
         if (empty($rel) || empty($src) || $width==0 || $heigth==0){
-            return NULL;
+            return '';
         } else {
             return '<link rel="'.$rel.'" sizes="'.$width.'x'.$heigth.'" href="'.$src.'">';
         }
@@ -123,7 +126,8 @@ class HtmlTags{
 
 
     /**
-     * Devuelve NULL o un string con el tag HTMl para la carga del enlaces externos
+     * Devuelve un string con el tag HTMl para la carga del enlaces externos,
+     * siempre y cuando $rel y $src no esten vacios.En caso contrario devuelve un string vacio.
      * 
      * $rel puede ser:
      * LINK_STYLESHEET,LINK_CANONICAL,LINK_AMPHTML,LINK_MANIFEST,LINK_AUTHOR,
@@ -142,7 +146,7 @@ class HtmlTags{
 
     public static function link(string $rel='',string $src='',string $type='', string $title='',string $asTo=''):?string{
         if (empty($rel) || empty($src)){
-            return NULL;
+            return '';
         } else {
             $out='<link rel="'.$rel.'" href="'.$src.'"';
             $out.=(empty($type) && empty($title))?'':' type="'.$type.'" title="'.$title.'"';
@@ -178,7 +182,7 @@ class HtmlTags{
 
       
     /**
-     * UDevuelve un string con el tag Html para la carga de scripts de JavaScript externos
+     * Devuelve un string con el tag Html para la carga de scripts de JavaScript externos
      *
      * @param string $src
      * @return string
@@ -188,14 +192,14 @@ class HtmlTags{
     }
 
     /**
-     * Devulve NULL o un string con el tag Html de title
-     * <title>{$title}</title>
+     * Devuelve un string con la estructura Html 
+     * <title>$title</title>
      *
-     * @param [type] $title
-     * @return string|null
+     * @param string $title
+     * @return string
      */
-    public static function title($title):?string{
-        if (empty($title)){return NULL;}else{return "<title>{$title}</title>";};
+    public static function title(string $title=''):string{
+        return "<title>{$title}</title>";
     }
 
     /**
@@ -207,8 +211,8 @@ class HtmlTags{
     public static function viewPort(array $viewPort=NULL){
         if (!is_null($viewPort)){
             $out='';
-            $out.=(empty($viewPort[self::WIDTH]))?'':(self::returnValue($viewPort[self::WIDTH],self::WIDTH).', ');
-            $out.=(empty($viewPort[self::HEIGHT]))?'':(self::returnValue($viewPort[self::HEIGHT],self::HEIGHT).', ');
+            $out.=(empty($viewPort[self::WIDTH]))?'':self::WIDTH.'='.$viewPort[self::WIDTH].', ';
+            $out.=(empty($viewPort[self::HEIGHT]))?'':self::HEIGHT.'='.$viewPort[self::HEIGHT].', ';
             $out.=($viewPort["userScalable"]=="YES" || $viewPort["userScalable"]=="NO")?'user-scalable='.$viewPort["userScalable"].', ':'';
             $out.=($viewPort["initialScale"]!=0)?'initial-scale='.$viewPort["initialScale"].', ':'';
             $out.=($viewPort["maximumScale"]!=0)?'maximum-scale='.$viewPort["maximumScale"].', ':'';

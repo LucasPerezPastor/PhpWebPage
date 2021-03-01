@@ -56,9 +56,10 @@ $faceBookOpenGraph=["content"=>$contenido,HtmlTags::IMG=>$img,"appid"=>'',"type"
 
 //Twitter
 
-//Se pueden usar los arrays $contenido y $img de Social Media de Facebook.
 //$contenido=["title"=>'',"description"=>'',"url"=>'',"author"=>''];
 //$img=["src"=>'',"alt"=>''];
+$contenido=["title"=>'Title',"description"=>'Description',"url"=>'#',"author"=>'Author'];
+$img=["src"=>'#',"alt"=>'Alt'];
 $twitterCard=["content"=>$contenido,HtmlTags::IMG=>$img,"card"=>'',"site"=>''];
 
 //define('TWITTER_CARD',["content"=>$contenido,HtmlTags::IMG=>$img,"card"=>'',"site"=>'']);
@@ -107,8 +108,7 @@ $searchForm=["name"=>"busqueda","placeholder"=>"Búsqueda","method"=>"POST","act
 
 //define('SEARCH_FORM',["name"=>"busqueda","placeholder"=>"Búsqueda","method"=>"POST","action"=>"#"]);
 
-//Idioma de la página
-$language='esp';
+
 
 
 //Contenido del footer
@@ -175,7 +175,7 @@ $carousel=[$carousel1,$carousel2,$carousel3,$carousel4];
 //Las tarjetas son un array de dos arrays [img,body] y body puede ser un array multidimensional y el orden de muestra 
 //va en función del orden del array.
 
-$img=["src"=>"...","alt"=>"...",HtmlTags::WIDTH=>100,HtmlTags::HEIGHT=>100];
+$img=["src"=>"#","alt"=>"...",HtmlTags::WIDTH=>100,HtmlTags::HEIGHT=>100];
 $firstTitle=["type"=>HtmlTags::TITLE,"content"=>"Lore ipsum dolor sit amet"];
 $secondTitle=["type"=>HtmlTags::TITLE,"content"=>"Lore ipsum dolor sit amert"];
 $firstText=["type"=>HtmlTags::TEXT,"content"=>"Lore ipsum dolor sit amet consectetur"];
