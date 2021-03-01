@@ -41,6 +41,7 @@ class Basic extends HtmlTags{
         }
       };
       if (!is_null($javaScripts)){
+        
         foreach ($javaScripts as $value) {
           echo self::srcJavaScript($value).PHP_EOL;
         }
@@ -226,10 +227,15 @@ class Basic extends HtmlTags{
      * @param array $search
      * @return void
      */
-    public static function nav(array $navBar=NULL,string $title='',string $href="#",$logo=NULL,array $search=NULL){
+    public static function nav(array $navBar=NULL,string $title='',string $href="#",$logo=NULL,array $language=NULL,array $search=NULL){
       ?>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+         
+          
+    
+        
           <div class="container-fluid">
+          
             <a class="navbar-brand" href="<?php echo $href?>">
               <?php
               if (!empty($logo))
@@ -250,18 +256,60 @@ class Basic extends HtmlTags{
                 foreach ($menu as $value) {//Nos devueelve un array de strings que iremos imprimiendo uno a uno
                   echo $value;
                 }
-              if (!empty($search)){
+
+              $isSearch=(!is_null($search) && !empty($search))?true:false;
+              $isLanguage=(!is_null($language) && !empty($language))?true:false;
+
+              if ($isLanguage){
                 ?>
-                  <form class="d-flex" action="<?php echo (array_key_exists("action",$search)?$search["action"]:'')?>" method="<?php echo (array_key_exists("method",$search)?$search["method"]:'')?>">
-                    <input class="form-control me-2" type="search" placeholder="<?php echo (array_key_exists("placeholder",$search)?$search["placeholder"]:'')?>" 
-                                  aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit"><?php echo (array_key_exists("name",$search)?$search["name"]:'')?></button>
-                  </form>
+                  <div class="container col-lg-4  col-md-6 col-xs-12 mx-1">  
+                    <div class="row justify-content-end my-2">
+                      <select class="form-select form-select-sm" aria-label="languageSelect" style="width:auto;">
+                      <?php
+                        # $key es el valor que tendrá el option y después $value sera un array asociativo bidimensional con
+                        # $selected que si vale true deber ser la opción por defecto del select y $title que es el texto a mostrar
+                        foreach ($language as $key => $value) {
+                          # code...
+                          ?>
+                            <option <?php echo (array_key_exists('selected',$value)?(($value['selected']==true)?'selected':''):'');?> value="<?php echo $key?>"><?php echo (array_key_exists('title',$value)?$value['title']:'')?></option>
+                            <?php
+                        }
+                          ?>
+                      </select>
+                    </div>
+                <?php
+              }
+              if ($isLanguage && $isSearch)
+              {
+                ?>
+                  <div class="row ms-auto">
+                <?php
+              }   
+                if ($isSearch){
+                  ?>
+                    <form class="d-flex" action="<?php echo (array_key_exists("action",$search)?$search["action"]:'')?>" method="<?php echo (array_key_exists("method",$search)?$search["method"]:'')?>">
+                  <input class="form-control me-2" type="search" placeholder="<?php echo (array_key_exists("placeholder",$search)?$search["placeholder"]:'')?>" 
+                              aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit"><?php echo (array_key_exists("name",$search)?$search["name"]:'')?></button>
+                </form>
+                  <?php
+                }
+                if ($isLanguage && $isSearch)
+                {
+                  ?>
+                  </div>
+                  <?php    
+                }
+                if ($isLanguage)
+                {
+                  ?>    
+                  </div>
                 <?php
               }
               ?> 
             </div>
           </div>
+         
         </nav>
       <?php
     }

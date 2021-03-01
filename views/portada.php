@@ -11,9 +11,11 @@
   
 	</head>
 	<body>
-      <?php
-    
-    (TEMPLATE)::nav($navBar,"Portada","#",$logo,$searchForm);
+	
+	<?php
+    (TEMPLATE)::nav($navBar,"Portada","#",$logo,$languages,);//$searchForm);
+
+	
 
     (TEMPLATE)::carousel($carousel);
 	

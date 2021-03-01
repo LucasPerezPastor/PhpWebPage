@@ -53,7 +53,10 @@ $data=[HtmlTags::META_CHARSET=>'utf-8','author'=>'author',
 
             ],
             'content'=>''],
-
+        'language'=>
+        [
+            'es'=>'español','cat'=>'catalán','eng'=>'inglés'
+        ]       
 
 
     ];
