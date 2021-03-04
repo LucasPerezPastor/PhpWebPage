@@ -40,5 +40,12 @@ define('AUTHOR','Autor de la página');
 define('CSS_BASIC_FILE','css/starter-template.css'); // Custom styles for this template -->
 define ('CSS_BOOTSTRAP','css/bootstrap.min.css'); // Bootstrap core CSS -->
 
+define('ES_LANG','es');
+define ('CAT_LANG','cat');
+define ('ENG_LANG','en');
+define('DEFAULT_LANGUAGE',ES_LANG);//Definimos en idioma por defecto
+define('LIST_LANG',[ES_LANG,CAT_LANG,ENG_LANG]);//Lista de idiomas admitidos
+
+
 
 

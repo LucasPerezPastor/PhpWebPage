@@ -5,6 +5,7 @@ class TemplateText
 
     private $keys=[];
     private $content='';
+   
 
     /**
      * Construiremos el objecto con los valores de $text, siempre y cuando
@@ -28,6 +29,8 @@ class TemplateText
                 $this->content=$text['content'];
             }
         }
+
+        
     }
 
 

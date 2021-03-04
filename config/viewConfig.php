@@ -4,7 +4,7 @@
 //Archivo de configuracion de las variables generales de
 //las vistas que se utilizan en los templates
 
-// global $language;
+//La variable definitions es un objeto con todos los textos en el idioma seleccionado
 
 
 //***VARIABLES PARA EL HEAD DE LA PAGINA WEB */
@@ -12,7 +12,8 @@
 //"width" y "height" de la variable $viewPort tienen valores contenidos en la clase HtmlTags(VIEWPORT_DEVICE_WITDH Y VIEWPORT_DEVICE_HEIGHT)
 /*define("HEAD_CONTENT",[HtmlTags::META_CHARSET=>'utf-8',"author"=>'Author',"description"=>'Description',"title"=>'Title',
 "viewport"=>[HtmlTags::WIDTH=>HtmlTags::VIEWPORT_DEVICE_WIDTH,HtmlTags::HEIGHT=>'',"initialScale"=>0,"minimunScale"=>0,"maximumScale"=>0,"userScalable"=>'']]);*/
-$headContent=[HtmlTags::META_CHARSET=>'utf-8',"author"=>'Author',"description"=>'Description',"title"=>'Title',
+$headContent=[HtmlTags::META_CHARSET=>$definitions->{HtmlTags::META_CHARSET},"author"=>$definitions->author,"description"=>$definitions->description->secundario,
+"title"=>$definitions->title->principal,
 "viewport"=>[HtmlTags::WIDTH=>HtmlTags::VIEWPORT_DEVICE_WIDTH,HtmlTags::HEIGHT=>'',"initialScale"=>0,"minimunScale"=>0,"maximumScale"=>0,"userScalable"=>'']];
 
 $favicons=[];
@@ -39,7 +40,7 @@ $linksHead[]=["rel"=>HtmlTags::LINK_STYLESHEET,"src"=>'css/template.css',"asto"=
 //define("LINKS_HEAD",$links);
 
 
-$externalJavaScript=["js/jquery-3.5.1.min.js","js/bootstrap.min.js"];
+$externalJavaScript=["js/jquery-3.5.1.min.js","js/bootstrap.min.js","js/main.js"];
 //define ("EXTERNAL_JAVA_SCRIPTS",["js/jquery-3.5.1.min.js","js/bootstrap.min.js"]);
 //define ("EXTERNAL_JAVA_SCRIPTS",["https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js","https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"]);
 
@@ -47,8 +48,9 @@ $externalJavaScript=["js/jquery-3.5.1.min.js","js/bootstrap.min.js"];
 //Social Media
 
 //FaceBook
-$contenido=["title"=>'Title',"description"=>'Description',"url"=>'#',"author"=>'Author'];
-$img=["src"=>'#',"alt"=>'Alt'];
+$contenido=["title"=>$definitions->facebookOG->title->principal,"description"=>$definitions->facebookOG->description->principal,
+                "url"=>'#',"author"=>$definitions->facebookOG->author->principal];
+$img=["src"=>'#',"alt"=>$definitions->facebookOG->imageAlt->principal];
 $faceBookOpenGraph=["content"=>$contenido,HtmlTags::IMG=>$img,"appid"=>'',"type"=>'',"sitename"=>'',"locale"=>''];
 
 //define("FACEBOOKOPENGRAPH",["content"=>$contenido,HtmlTags::IMG=>$img,"appid"=>'',"type"=>'',"sitename"=>'',"locale"=>'']);
@@ -58,8 +60,9 @@ $faceBookOpenGraph=["content"=>$contenido,HtmlTags::IMG=>$img,"appid"=>'',"type"
 
 //$contenido=["title"=>'',"description"=>'',"url"=>'',"author"=>''];
 //$img=["src"=>'',"alt"=>''];
-$contenido=["title"=>'Title',"description"=>'Description',"url"=>'#',"author"=>'Author'];
-$img=["src"=>'#',"alt"=>'Alt'];
+$contenido=["title"=>$definitions->twitterCard->title->principal,"description"=>$definitions->twitterCard->description->principal,
+                "url"=>'#',"author"=>$definitions->twitterCard->author->principal];
+$img=["src"=>'#',"alt"=>$definitions->twitterCard->imageAlt->principal];
 $twitterCard=["content"=>$contenido,HtmlTags::IMG=>$img,"card"=>'',"site"=>''];
 
 //define('TWITTER_CARD',["content"=>$contenido,HtmlTags::IMG=>$img,"card"=>'',"site"=>'']);
@@ -73,12 +76,6 @@ $twitterCard=["content"=>$contenido,HtmlTags::IMG=>$img,"card"=>'',"site"=>''];
 //  "include"=>Nuevo Array asociativo con todos los Arrays de lista que estan incluidos dentro de esta lista.
 //  "title"=>Titulo de la lista,
 //  "src"=>Dirección de Hyperlink donde nos envía ese item de la lista
-
-
-
-
-
-
 
 
 $item1=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item1',"method"=>HtmlTags::LIST_ACTIVE,"include"=>
@@ -218,9 +215,24 @@ $cardGroup=[$cardPresent,$cardPresent,$cardPresent,$cardPresent];
 //define ("CARD_GROUP",[CARD_PRESENT,CARD_PRESENT,CARD_PRESENT,CARD_PRESENT,CARD_PRESENT]);
 
 
+//Modal Informacion cookies
+
+$infoCookies=['id'=>'infoCookies','buttons'=>[
+        ['id'=>'acceptInfoCookies','type'=>HtmlTags::BUTTON_CLOSE_MODAL,'title'=>$definitions->infoCookies->acceptCookies],
+        ['id'=>'closeInfocookies','type'=>HtmlTags::BUTTON_CLOSE_MODAL,'title'=>$definitions->infoCookies->close]]];
+
+
+// Modal del aviso de cookies
+
+$warningCookies=['id'=>'warningCookies','class'=>HtmlTags::STYLE_MODAL_DIALOG_END.' modal-xl '.HtmlTags::STYLE_NO_BORDER,
+'buttons'=>['id'=>'moreInfoCookies',['type'=>HtmlTags::BUTTON_TARGET_MODAL,'target_modal'=>'infoCookies','title'=>$definitions->warningCookies->moreInfoCookies],
+        ['id'=>'acceptCookies','type'=>HtmlTags::BUTTON_CLOSE_MODAL,'title'=>$definitions->warningCookies->acceptCookies],
+        ['id'=>'closeCookies','type'=>HtmlTags::BUTTON_CLOSE_MODAL,'title'=>$definitions->warningCookies->close]]];
+
+
 //Array de idiomas disponibles
 
-$languages=['es'=>['title'=>$definitions->language->es,'selected'=>true],
-        'cat'=>['title'=>$definitions->language->cat]   ];
+$languages=[ES_LANG=>['title'=>$definitions->language->es,'selected'=>($language==ES_LANG)?true:false],
+        CAT_LANG=>['title'=>$definitions->language->cat,'selected'=>($language==CAT_LANG)?true:false]];
 
 

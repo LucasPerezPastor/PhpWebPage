@@ -19,6 +19,7 @@ class Frontcontroller {
             
             $c=empty($_GET['c'])?DEFAULT_CONTROLLER:ucfirst($_GET['c']).'Controller'; //ucfirst pone en mayúcula la primera letra de la palabra
            
+           
             //recuperar el método de la petición
             // si no llega el parámetro m, el métod es index (config.php)
             //si llega m=create, el método sería create()

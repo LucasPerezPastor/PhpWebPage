@@ -3,33 +3,54 @@
 class Translate
 {
 
-    public function __construct(string $language='')
+
+    private $errorTranslateMessage='';
+
+    public function __construct(string $language='',string $defaultLanguage='',string $errorMessage=NULL)
     {
-        require_once 'lang/'.$language.'.php';
-        if (isset($data))
+        if (!is_null($errorMessage)){$this->errorTranslateMessage=$errorMessage;}
+
+        if (!empty($language))
         {
-            if (is_array($data))
+            $path='lang/'.$language.'.php';
+            $pathDefault='lang/'.$defaultLanguage.'.php';
+            if (file_exists($path))
             {
-                foreach ($data as $definition=>$value) 
+                require_once $path;
+            }elseif (file_exists($pathDefault))
+            {
+                require_once $pathDefault;
+            }else
+            {
+                throw new Exception('LANGUAGE NOT FOUND, IDIOMA NO LOCALIZADO');
+            }
+
+            
+            
+            if (isset($data))
+            {
+                if (is_array($data))
                 {
-                    # code...
-                    if (is_array($value))
+                    foreach ($data as $definition=>$value) 
                     {
-                        $this->{$definition}=$this->to_object($value);
-                    }elseif (is_string($value) || is_numeric($value))
-                    {
-                        $this->{$definition}=$value;
+                        # code...
+                        if (is_array($value))
+                        {
+                            $this->{$definition}=$this->to_object($value,self::class);
+                        }elseif (is_string($value) || is_numeric($value))
+                        {
+                            $this->{$definition}=$value;
+                        }
                     }
-                }
-            }   
-        }
-             
+                }   
+            }
+        }        
     }
 
 
-private function to_object(&$data)
+private function to_object(&$data,string $class='stdClass')
 {
-    $object=new stdClass;
+    $object=new $class('',$this->errorTranslateMessage);
     foreach ($data as $key => $value) 
     {
         # code...
@@ -51,7 +72,7 @@ public function __get($property)
         return $this->$property;
     }else
     {
-        return '';
+        return $this->errorTranslateMessage;
     }
 }
 

@@ -1,20 +1,23 @@
 <?php
 
-
+$textAccept='aceptar';
+$textClose='cerrar';
 $data=[HtmlTags::META_CHARSET=>'utf-8','author'=>'author',
         'description'=>['principal'=>'LoreIpsum'],
         'title'=>['principal'=>'LoreIpsum'],
         'facebookOG'=>
         [
-            'title'=>['principal'=>''],
-            'description'=>['principal'=>''],
-            'author'=>['principal'=>'']
+            'title'=>['principal'=>'Lore'],
+            'description'=>['principal'=>'Ipsum'],
+            'author'=>['principal'=>'Color'],
+            'imageAlt'=>['principal'=>'Image']
         ],
         'twitterCard'=>
         [
-            'title'=>['principal'=>''],
-            'description'=>['principal'=>''],
-            'author'=>['principal'=>'']
+            'title'=>['principal'=>'Lore'],
+            'description'=>['principal'=>'Ipsum'],
+            'author'=>['principal'=>'Color'],
+            'imageAlt'=>['principal'=>'Image']
         ],
         'navBar'=>
         [
@@ -31,6 +34,17 @@ $data=[HtmlTags::META_CHARSET=>'utf-8','author'=>'author',
         'sectionTitle'=>['section1'=>['title'=>'','content'=>'']
         /* Titulos de seccion con su contenido*/],
 
+        'warningCookies'=>//Modal Warning Cookies
+        [
+            'acceptCookies'=>strtoupper($textAccept),
+            'moreInfoCookies'=>'+INFO',
+            'close'=>strtoupper($textClose)
+        ],
+        'infoCookies'=>
+        [
+            'acceptCookies'=>strtoupper($textAccept),
+            'close'=>strtoupper($textClose)
+        ],
         'cookiesPolicy'=>
         [
             /* Dentro de content las keys irán envueltas emtre {}*/
@@ -55,7 +69,7 @@ $data=[HtmlTags::META_CHARSET=>'utf-8','author'=>'author',
             'content'=>''],
         'language'=>
         [
-            'es'=>'español','cat'=>'catalán','eng'=>'inglés'
+            ES_LANG=>'español',CAT_LANG=>'catalán',ENG_LANG=>'inglés'
         ]       
 
 

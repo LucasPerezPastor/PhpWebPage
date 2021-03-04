@@ -264,7 +264,7 @@ class Basic extends HtmlTags{
                 ?>
                   <div class="container col-lg-4  col-md-6 col-xs-12 mx-1">  
                     <div class="row justify-content-end my-2">
-                      <select class="form-select form-select-sm" aria-label="languageSelect" style="width:auto;">
+                      <select class="form-select form-select-sm" id="languageSelector" aria-label="languageSelect" style="width:auto;">
                       <?php
                         # $key es el valor que tendrá el option y después $value sera un array asociativo bidimensional con
                         # $selected que si vale true deber ser la opción por defecto del select y $title que es el texto a mostrar
@@ -287,7 +287,7 @@ class Basic extends HtmlTags{
               }   
                 if ($isSearch){
                   ?>
-                    <form class="d-flex" action="<?php echo (array_key_exists("action",$search)?$search["action"]:'')?>" method="<?php echo (array_key_exists("method",$search)?$search["method"]:'')?>">
+                    <form class="d-flex"  action="<?php echo (array_key_exists("action",$search)?$search["action"]:'')?>" method="<?php echo (array_key_exists("method",$search)?$search["method"]:'')?>">
                   <input class="form-control me-2" type="search" placeholder="<?php echo (array_key_exists("placeholder",$search)?$search["placeholder"]:'')?>" 
                               aria-label="Search">
                   <button class="btn btn-outline-success" type="submit"><?php echo (array_key_exists("name",$search)?$search["name"]:'')?></button>
