@@ -48,25 +48,31 @@ $data=[HtmlTags::META_CHARSET=>'utf-8','author'=>'author',
         'cookiesPolicy'=>
         [
             /* Dentro de content las keys irán envueltas emtre {}*/
+            'title'=>'Titulo',
             'keys'=>
-            [
+            ['clave'=>'valor','clave2'=>'valor2'
 
             ],
-            'content'=>''],
+            'content'=>['content1 {$clave}','content2 {$clave2}']
+        ],
         'legalAdvice'=>
         [
+            'title'=>'',
             'keys'=>
             [
 
             ],
-            'content'=>''],
+            'content'=>['']
+        ],
         'privacyPolicy'=>
         [
+            'title'=>'',
             'keys'=>
             [
 
             ],
-            'content'=>''],
+            'content'=>['']
+        ],
         'language'=>
         [
             ES_LANG=>'español',CAT_LANG=>'catalán',ENG_LANG=>'inglés'

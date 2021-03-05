@@ -35,9 +35,10 @@
 	(TEMPLATE)::makeModal($warningCookies);
 	//echo (TEMPLATE)::linkModal('warningCookies',['type'=>HtmlTags::BUTTON,'title'=>'warning']);
 	
+	$but=['id'=>'resetCookies','title'=>'RESET COOKIES'];
+	echo HtmlTags::button($but);
     ?>
-
-
+	
 	  
   </body>
 	

@@ -1,6 +1,6 @@
 <?php
 
-class Translate
+class Translate extends AssociativeArrayObject
 {
 
 
@@ -31,50 +31,23 @@ class Translate
             {
                 if (is_array($data))
                 {
-                    foreach ($data as $definition=>$value) 
-                    {
-                        # code...
-                        if (is_array($value))
-                        {
-                            $this->{$definition}=$this->to_object($value,self::class);
-                        }elseif (is_string($value) || is_numeric($value))
-                        {
-                            $this->{$definition}=$value;
-                        }
-                    }
+                    parent::__construct($data);
                 }   
             }
         }        
     }
 
 
-private function to_object(&$data,string $class='stdClass')
-{
-    $object=new $class('',$this->errorTranslateMessage);
-    foreach ($data as $key => $value) 
-    {
-        # code...
-        if (is_array($value))
-                {
-                // Convert the array to an object
-                        $value = $this->to_object($value);
-                }
-                // Add the value to the object
-                $object->{$key} = $value;
-    }
-    return $object;
 
-}
-
-public function __get($property) 
-{
-    if (property_exists($this, $property)) {
-        return $this->$property;
-    }else
+    public function __get($property) 
     {
-        return $this->errorTranslateMessage;
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }else
+        {
+            return $this->errorTranslateMessage;
+        }
     }
-}
 
 
 }

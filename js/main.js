@@ -3,22 +3,10 @@
 $(function() {
     languageSelector();
     showAlertCookie();
+    setButtonsCookies();
 });
 
-//$(window).on("load", languageSelector);
 
-    
-    /*
-    if ($('#languageSelector').length>0) //Si existe el elemento
-    {
-        document.write("<p>Existe el id languageSelector</p>");
-        $('#languageSelector').change
-        (function()
-            {
-                $.post("#",{lang:$("#languageSelector").val()})
-            }
-        ); //Comprobaremos si hay algún cambio para detectar el cambio de opción
-    }*/
 function languageSelector()
 {
     $('#results').text("Buscando id languageSelector");
@@ -103,6 +91,11 @@ function setCookie(cname, cvalue, exdays) {
     setCookie('alertCookies','false',365);
   }
 
+  function AlertCookies()
+  {
+    setCookie('alertCookies','true',365);
+  }
+
  
   function aceptarCookies(){
     vistoAvisoCookie();
@@ -110,5 +103,10 @@ function setCookie(cname, cvalue, exdays) {
     //alert(getCookie('aviso'));
   } 
   
-  
+  function setButtonsCookies()
+  {
+    $('#acceptInfoCookies').click(function(){noAlertCookies()} );
+    $('#acceptCookies').click(function(){noAlertCookies()} );
+    $('#resetCookies').click(function(){AlertCookies()});
+  }
 

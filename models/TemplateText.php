@@ -16,10 +16,9 @@ class TemplateText
      *
      * @param [type] $text
      */
-    public function __construct(&$text)
+    public function __construct(array $text=NULL)
     {
-        if (is_array($text))
-        {
+
             if (array_key_exists('keys',$text))
             {
                 $this->keys=$text['keys'];
@@ -28,7 +27,7 @@ class TemplateText
             {
                 $this->content=$text['content'];
             }
-        }
+
 
         
     }
@@ -60,6 +59,11 @@ class TemplateText
         }
          
         return $out;
+    }
+
+    public function setContent(string $text)
+    {
+        if (!empty($text)){$this->content=$text;}
     }
 
 

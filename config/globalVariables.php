@@ -4,4 +4,4 @@
 
 global $languages,$definitions,$headContent,$favicons,$linksHead,$externalJavaScript,
         $faceBookOpenGraph,$twitterCard,$navBar,$logo,$searchForm,$language,$footer,
-        $carousel,$cardPresent,$cardGroup,$warningCookies,$infoCookies;
+        $carousel,$cardPresent,$cardGroup,$warningCookies,$infoCookies,$bodyInfoCookies;

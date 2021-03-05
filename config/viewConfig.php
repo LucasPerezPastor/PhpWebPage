@@ -214,10 +214,15 @@ $cardGroup=[$cardPresent,$cardPresent,$cardPresent,$cardPresent];
 
 //define ("CARD_GROUP",[CARD_PRESENT,CARD_PRESENT,CARD_PRESENT,CARD_PRESENT,CARD_PRESENT]);
 
-
+// MODALS
+// ['id'=>'','title'=>'','class'=>'','align'=>'','body'=>['','','',''],buttons=>[[type=>'close',class_btn=>'btn-secondary',id=>'',title=>'Close']]]
+// $externalLink=['container_class'=>'','id'=>'','type'=>'','class'=>'','title'=>''];
+//' type' de $externalLink puede ser self::HYPERLINK o self::BUTTON
 //Modal Informacion cookies
 
-$infoCookies=['id'=>'infoCookies','buttons'=>[
+$bodyInfoCookies= new ListTemplateText($definitions->cookiesPolicy->getToArray());
+
+$infoCookies=['id'=>'infoCookies','title'=>$definitions->cookiesPolicy->title,'body'=>$bodyInfoCookies->getListcontent(),'buttons'=>[
         ['id'=>'acceptInfoCookies','type'=>HtmlTags::BUTTON_CLOSE_MODAL,'title'=>$definitions->infoCookies->acceptCookies],
         ['id'=>'closeInfocookies','type'=>HtmlTags::BUTTON_CLOSE_MODAL,'title'=>$definitions->infoCookies->close]]];
 
