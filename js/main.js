@@ -71,6 +71,9 @@ function setCookie(cname, cvalue, exdays) {
     return "";
   }
   
+  /**
+   * Muestra el modal de aviso cookies , salvo que exista la cookie 'alertCookies' y esta valga false
+   */
   function  showAlertCookie()
   {
       var myCookie=getCookie('alertCookies');
@@ -86,27 +89,24 @@ function setCookie(cname, cvalue, exdays) {
       }
   };
 
-  function noAlertCookies()
+  /**
+   * Crea o pone la variable 'alertCookies' en las cookies con valor false y validez de 365 días
+   */
+  function AlertCookies(value='false',days=365)
   {
-    setCookie('alertCookies','false',365);
+    setCookie('alertCookies',value,days);
   }
 
-  function AlertCookies()
-  {
-    setCookie('alertCookies','true',365);
-  }
-
- 
-  function aceptarCookies(){
-    vistoAvisoCookie();
-    showHideAlertCookie(isCookieEnabled('aviso'));
-    //alert(getCookie('aviso'));
-  } 
   
+  /**
+   * Asigna a los botones de "aceptar" del modal de avisocookies y de infocookies
+   * la funcion de crear la cookie alertCookies en modo false por 365 días.
+   * Y si existe un boton con id resetCookies la funcion de poner alertCookies a true por 365 días.
+   */
   function setButtonsCookies()
   {
-    $('#acceptInfoCookies').click(function(){noAlertCookies()} );
-    $('#acceptCookies').click(function(){noAlertCookies()} );
-    $('#resetCookies').click(function(){AlertCookies()});
+    $('#acceptInfoCookies').click(function(){AlertCookies()} );
+    $('#acceptCookies').click(function(){AlertCookies()} );
+    $('#resetCookies').click(function(){AlertCookies('true')});
   }
 

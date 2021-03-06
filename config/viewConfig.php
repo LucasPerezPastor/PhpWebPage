@@ -109,18 +109,19 @@ $item5=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item5',"method"=>HtmlTags::LIST_DR
 $navBar=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'menu',"method"=>'',"title"=>'',"src"=>'',"include"=>[
         $item1,$item2,$item3,$item4,$item5]];
 
+$navBarClass=['class'=>'','navColor'=>'navbar-dark','navBgColor'=>'bg-dark'];//Se definen las clase del navBar       
 //define('NAVBAR',$navBar);
 
 
 //Logo de la página
 
-$logo=["src"=>"img/logo.jpg","alt"=>"Logo",HtmlTags::WIDTH=>100,HtmlTags::HEIGHT=>24];
+$logo=["src"=>"img/logo.jpg","alt"=>$definitions->navBar->logo,HtmlTags::WIDTH=>100,HtmlTags::HEIGHT=>24];
 
 //define('LOGO',["src"=>"img/logo.jpg","alt"=>"Logo",HtmlTags::WIDTH=>100,HtmlTags::HEIGHT=>24]);
 
 //Formulario de búqueda
 
-$searchForm=["name"=>"busqueda","placeholder"=>"Búsqueda","method"=>"POST","action"=>"#"];
+$searchForm=["name"=>$definitions->navBarSearchForm->name,"placeholder"=>$definitions->navBarSearchForm->placeHolder,"method"=>"POST","action"=>"#"];
 
 //define('SEARCH_FORM',["name"=>"busqueda","placeholder"=>"Búsqueda","method"=>"POST","action"=>"#"]);
 

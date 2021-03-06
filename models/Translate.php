@@ -2,10 +2,19 @@
 
 class Translate extends AssociativeArrayObject
 {
-
+    
 
     private $errorTranslateMessage='';
 
+    /**
+     * En función del lenguaje seleccionado carga el archivo de idiomas que contiene la variable $data.
+     * Si no encuentra ese archivo prueba a cargar el idioma por defecto especificado. Si al final
+     * tampoco encuentra el idioma por defecto lanza una excepción para que sea tratatada por la página
+     *
+     * @param string $language
+     * @param string $defaultLanguage
+     * @param string $errorMessage
+     */
     public function __construct(string $language='',string $defaultLanguage='',string $errorMessage=NULL)
     {
         if (!is_null($errorMessage)){$this->errorTranslateMessage=$errorMessage;}

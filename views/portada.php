@@ -13,7 +13,7 @@
 	<body>
 	<?php
 	
-    (TEMPLATE)::nav($navBar,"Portada","#",$logo,$languages,);//$searchForm);
+    (TEMPLATE)::nav($navBar,$navBarClass,$definitions->navBar->title,"#",$logo,$languages,);//$searchForm);
 
 	
 

@@ -227,9 +227,19 @@ class Basic extends HtmlTags{
      * @param array $search
      * @return void
      */
-    public static function nav(array $navBar=NULL,string $title='',string $href="#",$logo=NULL,array $language=NULL,array $search=NULL){
+    public static function nav(array $navBar=NULL,array $toClass=NULL,string $title='',string $href="#",$logo=NULL,array $language=NULL,array $search=NULL){
+      $navClass='navbar-dark bg-dark';
+      if (!empty($toClass) && !is_null($toClass))
+      {
+        $navClass='';
+        $navClass=(array_key_exists('navColor',$toClass) && !is_null($toClass['navColor']))?$toClass['navColor'].' ':'navbar-dark ';
+        $navClass.=(array_key_exists('navBgColor',$toClass) && !is_null($toClass['navBgColor']))?$toClass['navBgColor'].' ':'bg-dark';
+        $navClass.=(array_key_exists('class',$toClass) &&  !is_null($toClass['class']))?$toClass['class'].' ':'';
+        $navClass=trim($navClass);
+      }
       ?>
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        
+        <nav class="navbar navbar-expand-md <?php echo $navClass?> fixed-top">
          
           
     
@@ -373,7 +383,7 @@ class Basic extends HtmlTags{
           if (!empty($informationFooter) && $informationFooter!=NULL)
           {?>
             <div class="p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-              <div class="col-lg-3 col-md-3 col-sm-12 text-start">TODO
+              <div class="col-lg-3 col-md-3 col-sm-12 text-start">
                 <?php echo (array_key_exists('copyright',$informationFooter)?$informationFooter['copyright']:'')?>
               </div>
               <div class="col-lg-6 col-md-8 col-sm-12 text-center">
@@ -704,6 +714,14 @@ class Basic extends HtmlTags{
     <?php    
   }
 
+  /**
+   * Genera un div con con dos texto en diferentes tamaños para 
+   * poner un título y una descripción
+   *
+   * @param [type] $title
+   * @param string $content
+   * @return void
+   */
   public static function sectionTitle($title=NULL, string $content='')
   {
     $innerTitle='';
@@ -743,8 +761,10 @@ class Basic extends HtmlTags{
       }
       ?>
       <div class="section-title">
-        <h6><?php echo $innerTitle;?></h6>
-        <h2><?php echo $innerContent;?></h2>
+        <?php
+          echo (!empty($innerTitle))?"<h6>{$innerTitle}</h6>".PHP_EOL:'';
+          echo (!empty($innerContent))?"<h2>{$innerContent}</h2>".PHP_EOL:'';
+        ?>
       </div>
       <?php
     }

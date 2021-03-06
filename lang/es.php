@@ -1,5 +1,9 @@
 <?php
 
+
+// Variable de configuración de idioma. En este caso el idioma español
+
+
 $textAccept='aceptar';
 $textClose='cerrar';
 $data=[HtmlTags::META_CHARSET=>'utf-8','author'=>'author',
@@ -21,7 +25,12 @@ $data=[HtmlTags::META_CHARSET=>'utf-8','author'=>'author',
         ],
         'navBar'=>
         [
-            'logo'=>'','title'=>'','searchForm'=>['name'=>'','placeHolder'=>'']/* claves de los nombre de items y subitems*/
+            'logo'=>'','title'=>'Portada','searchForm'=>['name'=>'','placeHolder'=>'']/* claves de los nombre de items y subitems*/
+        ],
+        'navBarSearchForm'=>
+        [
+            'name'=>'BUSQUEDA',
+            'placeHolder'=>'Lore Ipsum'
         ],
         'footer'=>
         [
