@@ -79,35 +79,24 @@ $twitterCard=["content"=>$contenido,HtmlTags::IMG=>$img,"card"=>'',"site"=>''];
 
 
 $item1=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item1',"method"=>HtmlTags::LIST_ACTIVE,"include"=>
-                ["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item1',"title"=>'Hyperlink',"src"=>'#']];
+                ["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item1',"title"=>$definitions->navBar->menu->link,"src"=>'#']];
 $item2=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item2',"include"=>
-                ["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item2',"title"=>'Hyperlink',"src"=>'#']];
+                ["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item2',"title"=>$definitions->navBar->menu->link2,"src"=>'#']];
 $item3=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item3',"include"=>
-                ["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item3',"method"=>HtmlTags::HYPERLINK_DISABLED,"title"=>'Hyperlink',"src"=>'#']];
+                ["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlink1item3',"method"=>HtmlTags::HYPERLINK_DISABLED,"title"=>$definitions->navBar->menu->link3,"src"=>'#']];
 $subMenu4=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem4',"include"=>
                 [["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item1',"include"=>
-                        ["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item1',"title"=>'Hyperlink',"src"=>'#']],
+                        ["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item1',"title"=>$definitions->navBar->menu->link4->sublink->link1,"src"=>'#']],
                 ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item2',"include"=>
-                        ["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item2',"title"=>'Hyperlink',"src"=>'#']],
+                        ["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item2',"title"=>$definitions->navBar->menu->link4->sublink->link2,"src"=>'#']],
                 ["type"=>HtmlTags::LIST_ARTICLE,"id"=>'submenuitem4item2',"include"=>
-                        ["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item2',"title"=>'Hyperlink',"src"=>'#']],
+                        ["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinksubmenuitem4item3',"title"=>$definitions->navBar->menu->link4->sublink->link3,"src"=>'#']],
                 ]];
 $item4=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item4',"method"=>HtmlTags::LIST_DROPDOWN,"include"=>
-        [["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinkitem4',"title"=>'Hyperlink',"src"=>'#'],$subMenu4]];
-
-$subMenu5=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'submenuitem5',"include"=>
-        [["type"=>HtmlTags::LIST_ARTICLE,"include"=>
-                ["type"=>HtmlTags::HYPERLINK,"src"=>'#']],
-        ["type"=>HtmlTags::LIST_ARTICLE,"include"=>
-                ["type"=>HtmlTags::HYPERLINK,"src"=>'#']],
-        ["type"=>HtmlTags::LIST_ARTICLE,"include"=>
-                ["type"=>HtmlTags::HYPERLINK,"src"=>'#']],
-        ]];
-$item5=["type"=>HtmlTags::LIST_ARTICLE,"id"=>'item5',"method"=>HtmlTags::LIST_DROPDOWN,"include"=>
-                [["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinkitem5',"title"=>'Hyperlink',"src"=>'#'],$subMenu5]];
+        [["type"=>HtmlTags::HYPERLINK,"id"=>'hyperlinkitem4',"title"=>$definitions->navBar->menu->link4->title,"src"=>'#'],$subMenu4]];
 
 $navBar=["type"=>HtmlTags::LIST_UNORDERED,"id"=>'menu',"method"=>'',"title"=>'',"src"=>'',"include"=>[
-        $item1,$item2,$item3,$item4,$item5]];
+        $item1,$item2,$item3,$item4]];
 
 $navBarClass=['class'=>'','navColor'=>'navbar-dark','navBgColor'=>'bg-dark'];//Se definen las clase del navBar       
 //define('NAVBAR',$navBar);
@@ -121,7 +110,7 @@ $logo=["src"=>"img/logo.jpg","alt"=>$definitions->navBar->logo,HtmlTags::WIDTH=>
 
 //Formulario de búqueda
 
-$searchForm=["name"=>$definitions->navBarSearchForm->name,"placeholder"=>$definitions->navBarSearchForm->placeHolder,"method"=>"POST","action"=>"#"];
+$searchForm=["name"=>$definitions->navBar->searchForm->name,"placeholder"=>$definitions->navBar->searchForm->placeHolder,"method"=>"POST","action"=>"#"];
 
 //define('SEARCH_FORM',["name"=>"busqueda","placeholder"=>"Búsqueda","method"=>"POST","action"=>"#"]);
 
@@ -230,7 +219,7 @@ $infoCookies=['id'=>'infoCookies','title'=>$definitions->cookiesPolicy->title,'b
 
 // Modal del aviso de cookies
 
-$warningCookies=['id'=>'warningCookies','class'=>HtmlTags::STYLE_MODAL_DIALOG_END.' modal-xl '.HtmlTags::STYLE_NO_BORDER,
+$warningCookies=['id'=>'warningCookies','class'=>HtmlTags::STYLE_MODAL_DIALOG_END.' modal-xl '.HtmlTags::STYLE_NO_BORDER,'static'=>true,
 'buttons'=>['id'=>'moreInfoCookies',['type'=>HtmlTags::BUTTON_TARGET_MODAL,'target_modal'=>'infoCookies','title'=>$definitions->warningCookies->moreInfoCookies],
         ['id'=>'acceptCookies','type'=>HtmlTags::BUTTON_CLOSE_MODAL,'title'=>$definitions->warningCookies->acceptCookies],
         ['id'=>'closeCookies','type'=>HtmlTags::BUTTON_CLOSE_MODAL,'title'=>$definitions->warningCookies->close]]];

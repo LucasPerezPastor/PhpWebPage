@@ -82,9 +82,7 @@ function setCookie(cname, cvalue, exdays) {
         // No enseñamos el modal de cookies
       }else
       {
-        var myCookiesModal = new bootstrap.Modal(document.getElementById('warningCookies'), {
-            keyboard: false , focus:true
-          })
+        var myCookiesModal = new bootstrap.Modal(document.getElementById('warningCookies'),{backdrop:'static' , keyboard:false})
         myCookiesModal.show();
       }
   };
@@ -107,6 +105,7 @@ function setCookie(cname, cvalue, exdays) {
   {
     $('#acceptInfoCookies').click(function(){AlertCookies()} );
     $('#acceptCookies').click(function(){AlertCookies()} );
+    $('#closeInfocookies').click(function() {showAlertCookie()})
     $('#resetCookies').click(function(){AlertCookies('true')});
   }
 

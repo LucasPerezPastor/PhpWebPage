@@ -25,12 +25,13 @@ $data=[HtmlTags::META_CHARSET=>'utf-8','author'=>'author',
         ],
         'navBar'=>
         [
-            'logo'=>'','title'=>'Portada','searchForm'=>['name'=>'','placeHolder'=>'']/* claves de los nombre de items y subitems*/
-        ],
-        'navBarSearchForm'=>
-        [
-            'name'=>'BUSQUEDA',
-            'placeHolder'=>'Lore Ipsum'
+            'logo'=>'','title'=>'Portada','searchForm'=>['name'=>'','placeHolder'=>''],/* claves de los nombre de items y subitems*/
+            'menu'=>['link'=>'Hyperlink','link2'=>'Hyperlink2','link3'=>'Hyperlink3',
+                    'link4'=>
+                    ['title'=>'Hyperlink4','sublink'=>
+                        ['link1'=>'SubHiperlink1','link2'=>'SubHiperlink2','link3'=>'SubHiperlink3']]
+            ]
+                   
         ],
         'footer'=>
         [

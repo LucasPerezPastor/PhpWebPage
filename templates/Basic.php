@@ -437,11 +437,14 @@ class Basic extends HtmlTags{
     }
     
     public static function makeModal(array $modal=NULL, array $externalLink=NULL){
-      # $modal=['id'=>'','title'=>'','class'=>'','align'=>'','body'=>['','','',''],buttons=>[[type=>'close',class_btn=>'btn-secondary',id=>'',title=>'Close']]]
+      # $modal=['id'=>'','title'=>'','class'=>'','align'=>'','static'=>false,'body'=>['','','',''],buttons=>[[type=>'close',class_btn=>'btn-secondary',id=>'',title=>'Close']]]
       # $externalLink=['container_class'=>'','id'=>'','type'=>'','class'=>'','title'=>''];
       # 'type' de $externalLink puede ser self::HYPERLINK o self::BUTTON
       
 
+      # <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      # <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+ 
       if (!empty($modal) && $modal!=NULL)
       {
       $id=array_key_exists(self::ID,$modal)?$modal[self::ID]:((array_key_exists('title',$modal))?$modal['title'].'ModalCenteredScrollable':'ModalCenteredScrollable');
@@ -471,8 +474,9 @@ class Basic extends HtmlTags{
       {
         $classModalDialog=self::STYLE_MODAL_DIALOG_CENTERED;
       }
+      $static=(array_key_exists('static',$modal))?(($modal['static']==true)?'data-bs-backdrop="static" data-bs-keyboard="false"':''):'';
       ?>
-      <div class="modal fade" id="<?php echo $id?>" tabindex="-1" aria-labelledby="<?php echo $idAriaLabelledBy?>" style="display: none;" aria-hidden="true">
+      <div class="modal fade" id="<?php echo $id?>" <?php echo $static ?>tabindex="-1" aria-labelledby="<?php echo $idAriaLabelledBy?>" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable <?php echo $classModalDialog?>" >
           <div class="modal-content">
             <div class="modal-header <?php echo $classModalInnerContent?>">
