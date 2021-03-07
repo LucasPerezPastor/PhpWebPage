@@ -105,7 +105,16 @@ function setCookie(cname, cvalue, exdays) {
   {
     $('#acceptInfoCookies').click(function(){AlertCookies()} );
     $('#acceptCookies').click(function(){AlertCookies()} );
-    $('#closeInfocookies').click(function() {showAlertCookie()})
+   
+    var myInfoCookiesModal = document.getElementById('infoCookies')
+    // Añadimos un evento de control para que cuando se haya cerrado el modal infoCookies
+    // vuelva a mostrar el modal de warningInfoCookies en el caso que no se hayan admitido las cookies
+    myInfoCookiesModal .addEventListener('hidden.bs.modal', function (event) 
+      {
+        // do something...
+        showAlertCookie()
+      })
+
     $('#resetCookies').click(function(){AlertCookies('true')});
   }
 

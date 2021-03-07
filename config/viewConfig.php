@@ -214,7 +214,7 @@ $bodyInfoCookies= new ListTemplateText($definitions->cookiesPolicy->getToArray()
 
 $infoCookies=['id'=>'infoCookies','title'=>$definitions->cookiesPolicy->title,'body'=>$bodyInfoCookies->getListcontent(),'buttons'=>[
         ['id'=>'acceptInfoCookies','type'=>HtmlTags::BUTTON_CLOSE_MODAL,'title'=>$definitions->infoCookies->acceptCookies],
-        ['id'=>'closeInfocookies','type'=>HtmlTags::BUTTON_CLOSE_MODAL,'title'=>$definitions->infoCookies->close]]];
+        ['id'=>'closeInfoCookies','type'=>HtmlTags::BUTTON_CLOSE_MODAL,'title'=>$definitions->infoCookies->close]]];
 
 
 // Modal del aviso de cookies
