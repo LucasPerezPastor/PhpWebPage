@@ -192,7 +192,7 @@ $listLink=["type"=>HtmlTags::LIST_UNORDERED,HtmlTags::ID=>'submenuitem5',"includ
         ]];
 $body=[$firstTitle,$firstText,$secondTitle,$listLink];
 
-$cardPresent=[HtmlTags::IMG=>$img,"body"=>$body];
+$cardPresent=[HtmlTags::IMG=>$img,"body"=>$body,'class'=>'no-border'];
 
 //define("CARD_PRESENT",[HtmlTags::IMG=>$img,"body"=>$body]);
 

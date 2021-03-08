@@ -618,16 +618,17 @@ class Basic extends HtmlTags{
    */
   public static function card(array $card=NULL, bool $horizontal=true){
     // Si $horizontal = false , card estará en formato vertical con la imagen en la parte superior
+    $toClass=(array_key_exists('class',$card))?$card['class']:'';
     if (!empty($card) && $card!=NULL){
       if ($horizontal)
       {?>
-        <div class="card mb-3">
+        <div class="card <?php echo $toClass?> mb-3">
           <div class="row g-0">
             <div class="col-lg-4 col-md-4 col-sm-12">
        <?php 
       }else
       {?>
-        <div class="card">
+        <div class="card <?php echo $toClass?>">
       <?php
       }
             if (array_key_exists(self::IMG,$card))
@@ -670,8 +671,8 @@ class Basic extends HtmlTags{
                     }elseif ($value["type"]==self::LIST_UNORDERED || $value["type"]==self::LIST_ARTICLE|| $value["type"]==self::HYPERLINK)
                     {
                       // Definimos las clases a añadir en función del tipo de elemento
-                      $toClass=[["type"=>self::LIST_UNORDERED,"class"=>"list-group"],
-                      ["type"=>self::LIST_ARTICLE,"class"=>"list-group-item"],
+                      $toClass=[["type"=>self::LIST_UNORDERED,"class"=>"list-group".$toClass],
+                      ["type"=>self::LIST_ARTICLE,"class"=>"list-group-item".$toClass],
                        ["type"=>self::HYPERLINK,"class"=>"card-link","classbtn"=>"btn btn-primary"]];
                         self::listExplorerToHtml($value,$toClass);                    
                     }
@@ -679,8 +680,11 @@ class Basic extends HtmlTags{
                 }
               }?>             
             </div>
-          <?php if ($horizontal){ echo "</div>";}?>
+      <?php if ($horizontal){?>
+          </div>
         </div>
+      <?php
+      }?>
       </div>   
     <?php
     }
@@ -694,7 +698,7 @@ class Basic extends HtmlTags{
    * @param integer $columns
    * @return void
    */
-  public static function cardGroup(array $cards=NULL, int $columns=1)
+  public static function cardGroup(array $cards=NULL, int $columns=1,bool $horizontal=true)
   {
     ?>    
     <div class="row row-cols-1 row-cols-md-<?php echo $columns;?> g-4">
@@ -707,7 +711,7 @@ class Basic extends HtmlTags{
             ?>
             <div class="col">
             <?php
-              self::card($value);
+              self::card($value,$horizontal);
             ?>
             </div>
             <?php
