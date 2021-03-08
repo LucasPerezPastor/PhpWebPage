@@ -607,6 +607,41 @@ class Basic extends HtmlTags{
 
 
   /**
+   * En función del tipo de elemento indicado en el array card , imprime la etiqueta 
+   * correspondiente en código html .
+   *
+   * @param array $value
+   * @param string $toClass
+   * @return void
+   */
+  public static function typeCardToHTML(array $value, string $toClass='')
+  {
+    if (array_key_exists("type",$value))
+    {
+      if ($value["type"]==self::TITLE)
+      {?>
+        <h5 class="card-title"><?php echo (array_key_exists("content",$value)?$value["content"]:'')?></h5>
+      <?php
+      }elseif ($value["type"]==self::TEXT)
+      {?>
+        <p class="card-text"><?php echo (array_key_exists("content",$value)?$value["content"]:'')?></p>
+      <?php
+      }elseif ($value["type"]==self::SMALL_TEXT){
+      ?>
+        <p class="card-text"><small class="text-muted"><?php echo (array_key_exists("content",$value)?$value["content"]:'')?></small></p>
+      <?php
+      }elseif ($value["type"]==self::LIST_UNORDERED || $value["type"]==self::LIST_ARTICLE|| $value["type"]==self::HYPERLINK)
+      {
+        // Definimos las clases a añadir en función del tipo de elemento
+        $toClass=[["type"=>self::LIST_UNORDERED,"class"=>"list-group".$toClass],
+        ["type"=>self::LIST_ARTICLE,"class"=>"list-group-item".$toClass],
+         ["type"=>self::HYPERLINK,"class"=>"card-link","classbtn"=>"btn btn-primary"]];
+          self::listExplorerToHtml($value,$toClass);                    
+      }
+    } 
+  }
+
+  /**
    * Genera una tarjeta establecida por los valores del array $card.
    * En este array esta definido la imagen , si tiene títulos , contenido , listas o texto en pequeño.
    * La variable $horizontal indica si queremos una tarjeta en horizontal en este caso el valor es true 
@@ -654,32 +689,25 @@ class Basic extends HtmlTags{
               {
                 foreach ($card["body"] as $value) {
                   # code...
-                  if (array_key_exists("type",$value))
-                  {
-                    if ($value["type"]==self::TITLE)
-                    {?>
-                      <h5 class="card-title"><?php echo (array_key_exists("content",$value)?$value["content"]:'')?></h5>
-                    <?php
-                    }elseif ($value["type"]==self::TEXT)
-                    {?>
-                      <p class="card-text"><?php echo (array_key_exists("content",$value)?$value["content"]:'')?></p>
-                    <?php
-                    }elseif ($value["type"]==self::SMALL_TEXT){
-                    ?>
-                      <p class="card-text"><small class="text-muted"><?php echo (array_key_exists("content",$value)?$value["content"]:'')?></small></p>
-                    <?php
-                    }elseif ($value["type"]==self::LIST_UNORDERED || $value["type"]==self::LIST_ARTICLE|| $value["type"]==self::HYPERLINK)
-                    {
-                      // Definimos las clases a añadir en función del tipo de elemento
-                      $toClass=[["type"=>self::LIST_UNORDERED,"class"=>"list-group".$toClass],
-                      ["type"=>self::LIST_ARTICLE,"class"=>"list-group-item".$toClass],
-                       ["type"=>self::HYPERLINK,"class"=>"card-link","classbtn"=>"btn btn-primary"]];
-                        self::listExplorerToHtml($value,$toClass);                    
-                    }
-                  }  
+                  self::typeCardToHtml($value,$toClass);
                 }
               }?>             
             </div>
+            <?php 
+              if (array_key_exists('footer',$card))
+              {
+                ?>
+                <div class="card-footer">
+                <?php
+                   foreach ($card["footer"] as $value) 
+                   {
+                    self::typeCardToHtml($value,$toClass);
+                    }
+                ?>
+                </div>
+                <?php
+              }
+            ?>
       <?php if ($horizontal){?>
           </div>
         </div>
