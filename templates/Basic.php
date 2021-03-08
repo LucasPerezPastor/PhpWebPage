@@ -657,13 +657,13 @@ class Basic extends HtmlTags{
     if (!empty($card) && $card!=NULL){
       if ($horizontal)
       {?>
-        <div class="card <?php echo $toClass?> mb-3">
+        <div class="card h-100 <?php echo $toClass?> mb-3">
           <div class="row g-0">
             <div class="col-lg-4 col-md-4 col-sm-12">
        <?php 
       }else
       {?>
-        <div class="card <?php echo $toClass?>">
+        <div class="card h-100 <?php echo $toClass?>">
       <?php
       }
             if (array_key_exists(self::IMG,$card))
